@@ -47,6 +47,8 @@ neon_text(["GITHUB >"], [WHITE], "menu-github.png", padding=6, scale=3)
 neon_text(["< ALL CATS"], [WHITE], "menu-all-cats.png", padding=6, scale=3)
 neon_text(["INSTALL >"], [YELLOW], "action-install.png", padding=5, scale=3)
 neon_text(["INSTALL"], [PINK], "title-install.png", padding=7, scale=3, large=True)
+neon_text(["1 / SETUP ONCE"], [CYAN], "title-setup-once.png", padding=5, scale=3)
+neon_text(["2 / CALL YOUR CAT"], [PINK], "title-call-cat.png", padding=5, scale=3)
 neon_text(["COPY COMMAND"], [WHITE], "action-copy-command.png", padding=5, scale=3)
 neon_text(["COPIED !"], [YELLOW], "action-copied.png", padding=5, scale=3)
 

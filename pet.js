@@ -35,21 +35,26 @@
   function installCommand(pet) {
     return `$weird-cats ${pet.nickname.toLowerCase()}`;
   }
+  function setupCommand() {
+    return 'codex plugin marketplace add nett0eth/weird-cats-codex-pets; codex plugin add weird-cats@weird-cats';
+  }
   function render(pet) {
     document.title = `${pet.nickname} · Weird Cats Codex Pet`;
     const slug = pet.nickname.toLowerCase().replace(/\s+/g, '-');
     const command = installCommand(pet);
-    detail.innerHTML = `<section class="detail-art detail-art--${slug}"><button class="detail-stage" type="button" aria-label="Pet ${pet.nickname}"><span class="detail-sprite" style="--sprite: url('${pet.asset}')" aria-hidden="true"></span><span class="detail-floor" aria-hidden="true"></span></button></section><section class="detail-copy"><h1 class="detail-name"><img src="./assets/art/ui/name-${slug}.png" alt="${pet.nickname}"></h1><img class="install-title" src="./assets/art/ui/title-install.png" alt="Install"><article class="install-sheet"><code class="install-command">${command}</code><button class="copy-command" type="button"><img src="./assets/art/ui/action-copy-command.png" alt="Copy command"></button></article></section>`;
+    const setup = setupCommand();
+    detail.innerHTML = `<section class="detail-art detail-art--${slug}"><button class="detail-stage" type="button" aria-label="Pet ${pet.nickname}"><span class="detail-sprite" style="--sprite: url('${pet.asset}')" aria-hidden="true"></span><span class="detail-floor" aria-hidden="true"></span></button></section><section class="detail-copy"><h1 class="detail-name"><img src="./assets/art/ui/name-${slug}.png" alt="${pet.nickname}"></h1><img class="install-title" src="./assets/art/ui/title-install.png" alt="Install"><div class="install-steps"><article class="install-sheet"><img class="step-title" src="./assets/art/ui/title-setup-once.png" alt="Step 1: setup once"><code class="install-command">${setup}</code><button class="copy-command" type="button" data-command="${setup}"><img src="./assets/art/ui/action-copy-command.png" alt="Copy setup command"></button></article><article class="install-sheet"><img class="step-title" src="./assets/art/ui/title-call-cat.png" alt="Step 2: call your cat"><code class="install-command">${command}</code><button class="copy-command" type="button" data-command="${command}"><img src="./assets/art/ui/action-copy-command.png" alt="Copy cat command"></button></article></div></section>`;
     activePet = { stage: detail.querySelector('.detail-stage'), sprite: detail.querySelector('.detail-sprite') };
     setFrame(0, 6);
     activePet.stage.addEventListener('click', react);
-    detail.querySelector('.copy-command').addEventListener('click', async (event) => {
+    detail.querySelectorAll('.copy-command').forEach((copyButton) => copyButton.addEventListener('click', async (event) => {
       const button = event.currentTarget;
+      const value = button.dataset.command;
       try {
-        await navigator.clipboard.writeText(command);
+        await navigator.clipboard.writeText(value);
       } catch {
         const helper = document.createElement('textarea');
-        helper.value = command;
+        helper.value = value;
         document.body.append(helper);
         helper.select();
         document.execCommand('copy');
@@ -57,7 +62,7 @@
       }
       button.innerHTML = '<img src="./assets/art/ui/action-copied.png" alt="Copied">';
       window.setTimeout(() => { button.innerHTML = '<img src="./assets/art/ui/action-copy-command.png" alt="Copy command">'; }, 1600);
-    });
+    }));
   }
   fetch('./pets.json').then((response) => response.json()).then((pets) => render(pets.find((candidate) => candidate.id === id) || pets[0])).catch(() => { detail.innerHTML = '<p class="detail-loading">This pet could not be loaded.</p>'; });
   addEventListener('pointermove', (event) => { pointer = { x: event.clientX, y: event.clientY }; updateLook(); }, { passive: true });

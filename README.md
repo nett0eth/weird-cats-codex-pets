@@ -11,7 +11,7 @@ The first public Weird Cats drop for Codex: four animated pixel companions with 
 | Glitch | WC 09 | `weird-cats-09-page-mascot` |
 | Beanie | WC 10 | `weird-cats-10-page-mascot` |
 
-Open the gallery, click a character, and choose **Install** inside its speech bubble. The detail page provides one short command to copy into Codex, such as `$weird-cats smoke`. Every package contains exactly `pet.json` and `spritesheet.webp`.
+Open the gallery, click a character, and choose **Install** inside its speech bubble. The detail page provides two copyable commands: a one-time plugin setup and the short character command, such as `$weird-cats smoke`. Every package contains exactly `pet.json` and `spritesheet.webp`.
 
 After Codex installs the package, open **Settings → Pets**, select **Refresh**, and choose the new custom pet.
 

@@ -23,10 +23,8 @@ Match names case-insensitively. If the invocation does not name one of these fou
    - Lucky: `weird-cats-07-page-mascot-v2.zip`
    - Glitch: `weird-cats-09-page-mascot-v2.zip`
    - Beanie: `weird-cats-10-page-mascot-v2.zip`
-2. Extract it into a fresh temporary directory.
-3. Verify the archive contains exactly `pet.json` and `spritesheet.webp`. Verify the manifest has `spriteVersionNumber` equal to `2` and that `spritesheetPath` is `spritesheet.webp`.
-4. Install the validated directory through the Codex custom-pet installation flow. Preserve the `id` and `displayName` from `pet.json`.
-5. Refresh the Codex Pets list and select the newly installed cat.
-6. Report the installed display name in one sentence.
+2. Run `../../scripts/install_pet.py <name>` with the bundled Python runtime. The script validates the archive and stages the pet under `${CODEX_HOME}/pets/<pet-id>` (or `~/.codex/pets/<pet-id>` when `CODEX_HOME` is unset).
+3. Open Codex **Settings → Pets**, refresh the list, and select the newly installed cat when UI control is available. Otherwise, tell the user to refresh and select it.
+4. Report the installed display name in one sentence.
 
 Do not replace another custom pet whose manifest has a different `id`. If a pet with the same `id` exists, update it with the bundled version.
