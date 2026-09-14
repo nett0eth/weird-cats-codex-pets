@@ -1,15 +1,12 @@
 (() => {
   const CELL_WIDTH = 192;
   const CELL_HEIGHT = 208;
-  const REPO = 'nett0eth/weird-cats-codex-pets';
-  const RELEASE = 'v1.0.0';
   const detail = document.querySelector('#pet-detail');
   const id = new URLSearchParams(location.search).get('id');
   let activePet = null;
   let pointer = null;
   let reacting = false;
 
-  const releaseUrl = (pet) => `https://github.com/${REPO}/releases/download/${RELEASE}/${pet.package}`;
   function setFrame(row, column) { activePet.sprite.style.backgroundPosition = `${-column * CELL_WIDTH}px ${-row * CELL_HEIGHT}px`; }
   function updateLook() {
     if (!activePet || !pointer || reacting) return;
@@ -36,7 +33,7 @@
     window.setTimeout(() => { reacting = false; activePet.stage.classList.remove('is-petted'); setFrame(0, 6); updateLook(); }, 650);
   }
   function installCommand(pet) {
-    return `Install ${pet.nickname} as a Codex Pet from ${releaseUrl(pet)}.`;
+    return `$weird-cats ${pet.nickname.toLowerCase()}`;
   }
   function render(pet) {
     document.title = `${pet.nickname} · Weird Cats Codex Pet`;

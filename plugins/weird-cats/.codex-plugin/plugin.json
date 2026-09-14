@@ -1,0 +1,30 @@
+{
+  "name": "weird-cats",
+  "version": "1.0.0",
+  "description": "Install one of four animated Weird Cats as a Codex Pet with a short command.",
+  "author": {
+    "name": "nett0eth",
+    "url": "https://github.com/nett0eth"
+  },
+  "homepage": "https://nett0eth.github.io/weird-cats-codex-pets/",
+  "repository": "https://github.com/nett0eth/weird-cats-codex-pets",
+  "keywords": ["codex", "pets", "pixel-art", "weird-cats"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Weird Cats",
+    "shortDescription": "Pixel-art companions for Codex.",
+    "longDescription": "Choose Smoke, Lucky, Glitch, or Beanie and install the animated character as your Codex Pet.",
+    "developerName": "nett0eth",
+    "category": "Creativity",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://nett0eth.github.io/weird-cats-codex-pets/",
+    "defaultPrompt": [
+      "$weird-cats smoke",
+      "$weird-cats lucky",
+      "$weird-cats glitch"
+    ],
+    "brandColor": "#FF30C4",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
+  }
+}
