@@ -16,7 +16,7 @@
     if (!pointer) return null;
     const rect = pet.link.getBoundingClientRect();
     const dx = pointer.x - (rect.left + rect.width / 2);
-    const dy = pointer.y - (rect.top + rect.height * 0.42);
+    const dy = pointer.y - (rect.top + rect.height * 0.43);
     if (Math.hypot(dx, dy) < 24) return null;
     const angle = (Math.atan2(dx, -dy) + Math.PI * 2) % (Math.PI * 2);
     return Math.round(angle / (Math.PI * 2 / DIRECTION_COUNT)) % DIRECTION_COUNT;
@@ -38,7 +38,7 @@
 
   function addHeart(pet) {
     const heart = document.createElement('span');
-    heart.className = 'pet-card__heart';
+    heart.className = 'pet-piece__heart';
     heart.textContent = '♥';
     heart.setAttribute('aria-hidden', 'true');
     heart.style.setProperty('--heart-x', `${38 + Math.random() * 24}%`);
@@ -62,17 +62,19 @@
       pet.link.classList.remove('is-petted');
       showDirection(pet, directionFromPointer(pet));
     }, 650);
-    status.textContent = `${pet.data.nickname} recebeu carinho ♥ A ficha foi aberta em outra aba.`;
+    status.textContent = `${pet.data.nickname} recebeu carinho ♥`;
   }
 
-  function createCard(data) {
+  function createPiece(data, index) {
     const link = document.createElement('a');
-    link.className = `pet-card${data.aura ? ' pet-card--aura' : ''}`;
+    const slug = data.nickname.toLowerCase().replace(/\s+/g, '-');
+    link.className = `pet-piece pet-piece--${slug}`;
     link.href = `./pet.html?id=${encodeURIComponent(data.id)}`;
     link.target = '_blank';
     link.rel = 'noreferrer';
+    link.style.setProperty('--piece-index', index);
     link.setAttribute('aria-label', `${data.nickname}: abrir ficha de instalação em outra aba`);
-    link.innerHTML = `<span class="pet-card__number">${data.collectionNumber}</span><span class="pet-card__portrait" aria-hidden="true"><span class="pet-sprite" style="--sprite: url('${data.asset}')"></span><span class="pet-card__floor"></span></span><span class="pet-card__info"><strong>${data.nickname}</strong><small>VIEW PET ↗</small></span>`;
+    link.innerHTML = `<span class="pet-piece__portrait" aria-hidden="true"><span class="pet-sprite" style="--sprite: url('${data.asset}')"></span><span class="pet-piece__shadow"></span></span><span class="pet-piece__identity"><img src="${data.nameArt}" alt="${data.nickname}" /><small>${data.collectionNumber}</small></span>`;
     const pet = { data, link, sprite: link.querySelector('.pet-sprite'), reacting: false };
     setFrame(pet, 0, 6);
     link.addEventListener('click', (event) => {
@@ -86,9 +88,9 @@
   fetch('./pets.json')
     .then((response) => { if (!response.ok) throw new Error('collection unavailable'); return response.json(); })
     .then((items) => {
-      pets = items.map(createCard);
+      pets = items.map(createPiece);
       row.replaceChildren(...pets.map((pet) => pet.link));
-      status.textContent = 'Todos acompanham o cursor. Clique para fazer carinho e abrir a instalação.';
+      status.textContent = 'Todos acompanham o cursor.';
     })
     .catch(() => { status.textContent = 'Não foi possível carregar a coleção.'; });
 
