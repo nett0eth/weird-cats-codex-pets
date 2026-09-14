@@ -2,3 +2,4 @@
 Thumbs.db
 *.log
 .tmp/
+.install-test*/

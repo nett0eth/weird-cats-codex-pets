@@ -1,28 +1,19 @@
 # Weird Cats × Codex Pets
 
-The first public Weird Cats drop for Codex: six animated pixel companions with sixteen cursor directions, interaction reactions, and Codex Pet v2 packages.
+The first public Weird Cats drop for Codex: four animated pixel companions with sixteen cursor directions, interaction reactions, and Codex Pet v2 packages.
 
-## Meet the first six
+## Meet the first four
 
 | Pet | Source | Technical ID |
 | --- | --- | --- |
-| Weirdo | WC 18 · Original | `weird-cats-18-page-mascot` |
 | Smoke | WC 04 | `weird-cats-04-page-mascot` |
 | Lucky | WC 07 | `weird-cats-07-page-mascot` |
 | Glitch | WC 09 | `weird-cats-09-page-mascot` |
 | Beanie | WC 10 | `weird-cats-10-page-mascot` |
-| Frog Hat | Special | `weird-cats-frog-hat-page-mascot` |
 
-Open the gallery, choose a character, and use the installation command on its detail page. Every package contains exactly `pet.json` and `spritesheet.webp`.
+Open the gallery, click a character, and choose **Install** inside its speech bubble. The detail page provides one natural-language command to copy into Codex. Every package contains exactly `pet.json` and `spritesheet.webp`.
 
-## Install manually
-
-1. Download one ZIP from the [v1.0.0 release](https://github.com/nett0eth/weird-cats-codex-pets/releases/tag/v1.0.0).
-2. Extract it to `$HOME/.codex/pets/<technical-id>/`.
-3. Open **Settings → Pets** in the ChatGPT desktop app.
-4. Select **Refresh**, then choose the new custom pet.
-
-The official OpenAI Pets guide describes the Settings → Pets, Refresh, and custom-pet selection flow: <https://learn.chatgpt.com/docs/pets>.
+After Codex installs the package, open **Settings → Pets**, select **Refresh**, and choose the new custom pet.
 
 ## Package format
 
@@ -33,7 +24,7 @@ The official OpenAI Pets guide describes the Settings → Pets, Refresh, and cus
 
 ## Add a future Weird Cat
 
-The gallery is data driven. Add the new package under `packages/<technical-id>/`, put the display atlas in `assets/`, add one object to `pets.json`, and attach the installable ZIP to the next GitHub release. `gallery.js` and `pet.js` render the new entry without hard-coded card markup.
+The gallery is data driven. Add the new package under `packages/<technical-id>/`, put the display atlas in `assets/`, add one object to `pets.json`, and attach the installable package to the next GitHub release. `gallery.js` and `pet.js` render the new entry without hard-coded card markup.
 
 ## Local preview
 

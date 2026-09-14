@@ -1,42 +1,29 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0b0e0d" />
-    <meta name="description" content="Escolha e instale um Weird Cat como seu Codex Pet." />
+    <meta name="description" content="Choose and install a Weird Cat as your Codex Pet." />
     <title>Weird Cats × Codex Pets</title>
-    <link rel="stylesheet" href="./styles.css?v=atelier-02" />
+    <link rel="stylesheet" href="./styles.css?v=portal-02" />
   </head>
   <body class="gallery-body">
-    <div class="scene-backdrop" aria-hidden="true"></div>
+    <div class="scene-backdrop" aria-hidden="true"><video autoplay muted loop playsinline poster="./assets/art/gallery-studio.png"><source src="./assets/art/neon-room.mp4" type="video/mp4" /></video></div>
     <header class="site-header">
-      <a class="wordmark" href="./" aria-label="Weird Cats Codex Pets — início">
-        <img src="./assets/names/collection-mark.svg" alt="Weird Cats · Codex Pets" />
+      <a class="wordmark" href="./" aria-label="Weird Cats Codex Pets — home">
+        <img src="./assets/art/weird-cats-official-logo.png" alt="Weird Cats" />
       </a>
-      <a class="header-link" href="https://github.com/nett0eth/weird-cats-codex-pets" target="_blank" rel="noreferrer">ARCHIVE ↗</a>
+      <img class="site-kicker" src="./assets/art/ui/menu-drop.png" alt="Codex Pets, Drop 01" />
+      <a class="header-link" href="https://github.com/nett0eth/weird-cats-codex-pets" target="_blank" rel="noreferrer"><img src="./assets/art/ui/menu-github.png" alt="GitHub" /></a>
     </header>
-    <main>
-      <section class="hero" aria-labelledby="page-title">
-        <div class="hero__intro">
-          <p class="eyebrow">DIGITAL COMPANIONS · FIRST EDITION</p>
-          <h1 id="page-title">Six strange<br />little friends.</h1>
-          <p class="hero__copy">Uma coleção de gatos pixelados que acompanha o cursor, reage ao carinho e encontra um cantinho no Codex.</p>
-        </div>
-        <div class="hero__edition" aria-label="Informações da edição"><span>DROP 01</span><span>2026</span></div>
-      </section>
-
-      <section class="collection" aria-labelledby="collection-title">
-        <div class="section-heading">
-          <p class="eyebrow">THE RESIDENTS</p>
-          <h2 id="collection-title">Pick a companion</h2>
-          <p>Encoste o cursor para chamar a atenção. Clique para fazer carinho e abrir a instalação.</p>
-        </div>
-        <div id="pet-row" class="pet-row" aria-label="Coleção com seis Weird Cats"></div>
-        <p id="gallery-status" class="gallery-status" aria-live="polite">Carregando a coleção…</p>
+    <main class="portal-main">
+      <section class="portal-stage" aria-labelledby="collection-title">
+        <h1 id="collection-title" class="portal-heading"><img src="./assets/art/ui/title-select-weird-cat.png" alt="Select your Weird Cat" /></h1>
+        <div id="pet-row" class="pet-row" aria-label="Collection of four Weird Cats"></div>
+        <p id="gallery-status" class="gallery-status" aria-live="polite">Loading the collection…</p>
       </section>
     </main>
-    <footer><span>WEIRD CATS × CODEX PETS</span><span>HANDCRAFTED IN PIXELS · 01/06</span></footer>
-    <script src="./gallery.js?v=atelier-02"></script>
+    <script src="./gallery.js?v=portal-02"></script>
   </body>
 </html>
