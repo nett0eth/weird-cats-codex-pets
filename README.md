@@ -1,6 +1,6 @@
 # Weird Cats × Codex Pets
 
-The first public Weird Cats drop for Codex: four animated pixel companions with sixteen cursor directions, interaction reactions, and Codex Pet v2 packages.
+The Weird Cats Codex plugin now includes 25 experimental laptop companions, plus the four original pets. Each has sixteen cursor directions, interaction reactions, task signals, and a Codex Pet v2 package. The website gallery still shows the original four.
 
 ## Meet the first four
 
@@ -24,7 +24,9 @@ codex plugin marketplace add nett0eth/weird-cats-codex-pets
 codex plugin add weird-cats@weird-cats
 ```
 
-Then install any companion from the Codex composer with `$weird-cats smoke`, `$weird-cats lucky`, `$weird-cats glitch`, or `$weird-cats beanie`.
+Install all new companions with `$weird-cats all`, or choose one by name, such as `$weird-cats frog-hat`, `$weird-cats ash`, `$weird-cats prism`, `$weird-cats spectrum`, or `$weird-cats glitch`. The full list is in [`plugins/weird-cats/assets/catalog.json`](plugins/weird-cats/assets/catalog.json). The original four remain available as `$weird-cats smoke-classic`, `$weird-cats lucky-classic`, `$weird-cats glitch-classic`, and `$weird-cats beanie-classic`.
+
+These 25 packages are for testing in Codex. Their head movements use the Page Mascot directional poses, their working state shows a laptop, and greeting/hover poses have no hearts. The Codex pet format does not currently send a separate user-typing event, so looking down while the user types is demonstrated only in the local preview.
 
 ## Package format
 
@@ -35,7 +37,7 @@ Then install any companion from the Codex composer with `$weird-cats smoke`, `$w
 
 ## Add a future Weird Cat
 
-The gallery is data driven. Add the new package under `packages/<technical-id>/`, put the display atlas in `assets/`, add one object to `pets.json`, and attach the installable package to the next GitHub release. `gallery.js` and `pet.js` render the new entry without hard-coded card markup.
+The website gallery has its own four-pet catalog. To add another character to the experimental Codex plugin, add its validated package to `plugins/weird-cats/assets/pets/` and an entry to `plugins/weird-cats/assets/catalog.json`. The importer at `tools/import_laptop_collection.py` performs both steps from the tested local collection.
 
 ## Local preview
 

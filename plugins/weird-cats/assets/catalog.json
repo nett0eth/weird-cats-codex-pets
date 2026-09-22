@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "pets": [
+    {
+      "name": "violet",
+      "displayName": "Violet",
+      "id": "weird-cats-01-laptop",
+      "archive": "weird-cats-01-laptop.zip"
+    },
+    {
+      "name": "stereo",
+      "displayName": "Stereo",
+      "id": "weird-cats-02-laptop",
+      "archive": "weird-cats-02-laptop.zip"
+    },
+    {
+      "name": "hypno",
+      "displayName": "Hypno",
+      "id": "weird-cats-03-laptop",
+      "archive": "weird-cats-03-laptop.zip"
+    },
+    {
+      "name": "smoke",
+      "displayName": "Smoke",
+      "id": "weird-cats-04-laptop",
+      "archive": "weird-cats-04-laptop.zip"
+    },
+    {
+      "name": "tux",
+      "displayName": "Tux",
+      "id": "weird-cats-05-laptop",
+      "archive": "weird-cats-05-laptop.zip"
+    },
+    {
+      "name": "rusty",
+      "displayName": "Rusty",
+      "id": "weird-cats-06-laptop",
+      "archive": "weird-cats-06-laptop.zip"
+    },
+    {
+      "name": "lucky",
+      "displayName": "Lucky",
+      "id": "weird-cats-07-laptop",
+      "archive": "weird-cats-07-laptop.zip"
+    },
+    {
+      "name": "spectrum",
+      "displayName": "Spectrum",
+      "id": "weird-cats-08-laptop",
+      "archive": "weird-cats-08-laptop.zip"
+    },
+    {
+      "name": "glitch",
+      "displayName": "Glitch",
+      "id": "weird-cats-09-laptop-test",
+      "archive": "weird-cats-09-laptop-test.zip"
+    },
+    {
+      "name": "beanie",
+      "displayName": "Beanie",
+      "id": "weird-cats-10-laptop",
+      "archive": "weird-cats-10-laptop.zip"
+    },
+    {
+      "name": "ember",
+      "displayName": "Ember",
+      "id": "weird-cats-11-laptop",
+      "archive": "weird-cats-11-laptop.zip"
+    },
+    {
+      "name": "mocha",
+      "displayName": "Mocha",
+      "id": "weird-cats-13-laptop",
+      "archive": "weird-cats-13-laptop.zip"
+    },
+    {
+      "name": "flip",
+      "displayName": "Flip",
+      "id": "weird-cats-15-laptop",
+      "archive": "weird-cats-15-laptop.zip"
+    },
+    {
+      "name": "nova",
+      "displayName": "Nova",
+      "id": "weird-cats-17-laptop",
+      "archive": "weird-cats-17-laptop.zip"
+    },
+    {
+      "name": "weirdo",
+      "displayName": "Weirdo",
+      "id": "weird-cats-18-laptop",
+      "archive": "weird-cats-18-laptop.zip"
+    },
+    {
+      "name": "drip",
+      "displayName": "Drip",
+      "id": "weird-cats-19-laptop",
+      "archive": "weird-cats-19-laptop.zip"
+    },
+    {
+      "name": "ash",
+      "displayName": "Ash",
+      "id": "weird-cats-20-laptop",
+      "archive": "weird-cats-20-laptop.zip"
+    },
+    {
+      "name": "patch",
+      "displayName": "Patch",
+      "id": "weird-cats-21-laptop",
+      "archive": "weird-cats-21-laptop.zip"
+    },
+    {
+      "name": "mellow",
+      "displayName": "Mellow",
+      "id": "weird-cats-22-laptop",
+      "archive": "weird-cats-22-laptop.zip"
+    },
+    {
+      "name": "orbit",
+      "displayName": "Orbit",
+      "id": "weird-cats-23-laptop",
+      "archive": "weird-cats-23-laptop.zip"
+    },
+    {
+      "name": "slime",
+      "displayName": "Slime",
+      "id": "weird-cats-24-laptop",
+      "archive": "weird-cats-24-laptop.zip"
+    },
+    {
+      "name": "phantom",
+      "displayName": "Phantom",
+      "id": "weird-cats-25-laptop",
+      "archive": "weird-cats-25-laptop.zip"
+    },
+    {
+      "name": "wink",
+      "displayName": "Wink",
+      "id": "weird-cats-26-laptop",
+      "archive": "weird-cats-26-laptop.zip"
+    },
+    {
+      "name": "prism",
+      "displayName": "Prism",
+      "id": "weird-cats-rainbow-laptop",
+      "archive": "weird-cats-rainbow-laptop.zip"
+    },
+    {
+      "name": "frog-hat",
+      "displayName": "Frog Hat",
+      "id": "weird-cats-frog-hat-laptop",
+      "archive": "weird-cats-frog-hat-laptop.zip"
+    }
+  ],
+  "legacy": [
+    {
+      "name": "smoke-classic",
+      "displayName": "Smoke (original)",
+      "id": "weird-cats-04-page-mascot",
+      "archive": "weird-cats-04-page-mascot-v2.zip"
+    },
+    {
+      "name": "lucky-classic",
+      "displayName": "Lucky (original)",
+      "id": "weird-cats-07-page-mascot",
+      "archive": "weird-cats-07-page-mascot-v2.zip"
+    },
+    {
+      "name": "glitch-classic",
+      "displayName": "Glitch (original)",
+      "id": "weird-cats-09-page-mascot",
+      "archive": "weird-cats-09-page-mascot-v2.zip"
+    },
+    {
+      "name": "beanie-classic",
+      "displayName": "Beanie (original)",
+      "id": "weird-cats-10-page-mascot",
+      "archive": "weird-cats-10-page-mascot-v2.zip"
+    }
+  ]
+}
