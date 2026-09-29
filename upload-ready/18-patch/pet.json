@@ -1,0 +1,8 @@
+{
+  "id": "weird-cats-21-laptop",
+  "displayName": "Patch - Weird Cats",
+  "description": "Pixel cat with hand-drawn generated laptop animation and stable chest breathing.",
+  "spritesheetPath": "spritesheet.webp",
+  "spriteVersionNumber": 2,
+  "kind": "animal"
+}
