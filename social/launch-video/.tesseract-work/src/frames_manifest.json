@@ -1,0 +1,46 @@
+{
+ "smoke": [
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r2c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r0c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r1c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r9c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r4c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r10c5.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/smoke_r3c2.png"
+ ],
+ "lucky": [
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r2c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r0c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r1c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r9c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r4c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r10c5.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/lucky_r3c2.png"
+ ],
+ "glitch": [
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r2c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r0c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r1c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r9c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r4c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r10c5.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/glitch_r3c2.png"
+ ],
+ "beanie": [
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r2c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r0c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r1c2.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r0c0.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r9c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r4c1.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r10c5.png",
+  "/home/user/weird-cats-codex-pets/social/launch-video/.tesseract-work/src/x4/beanie_r3c2.png"
+ ]
+}
