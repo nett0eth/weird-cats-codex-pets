@@ -1,22 +1,24 @@
 # Weird Cats — vídeo de lançamento (TikTok / Instagram)
 
-- `WeirdCatsLaunch.mp4` — 1080×1920, 30 fps, 24 s, H.264 + AAC (−15.2 LUFS, pico −1.4 dBTP)
+- `WeirdCatsLaunch.mp4` — 1080×1920, 30 fps, 24 s, H.264 + AAC (só efeitos sonoros, pico −5.8 dBTP)
 - `WeirdCatsLaunch.tsrct` — projeto Tesseract editável (88 camadas, todas nativas: texto, shapes, imagens, áudio)
 - `Previews/` — filmstrip do vídeo final, filmstrip de layout, waveform da trilha
 - `.tesseract-work/build.py` — receita que gera o projeto do zero (rode `python3 .tesseract-work/build.py`)
 
-## Roteiro (120 BPM, 1 beat = 0,5 s)
+## Roteiro v2 (120 BPM, 1 beat = 0,5 s) — sem trilha, só SFX (a música entra no app)
 
 | Tempo | Cena | Texto |
 |---|---|---|
-| 0–3 s | Celular vibra, chegam notificações "psiu…", "tô chegando", "MIAU MIAU MIAU"; a orelha do Glitch aparece no rodapé da tela | TEM ALGO NO SEU CELULAR... (digitando) |
-| 3 s | Drop: flash branco, o Glitch explode pra fora do celular girando | CHEGAMOS! |
-| 5 / 7 / 9 s | Lucky, Smoke e Beanie saem, um por compasso, e todos dançam no beat | OS WEIRD CATS → SAÍMOS DO CELULAR → E VAMOS INVADIR... |
-| 11–17 s | Caos: chuva com 20 gatos da coleção, strobe de cor, feed rolando no celular | O SEU FEED |
-| 17–19 s | Break glitch (mosaico e troca de canais), gatos piscando | ERRO: GATO NORMAL NÃO ENCONTRADO |
-| 19–24 s | Celular é sugado, logo oficial entra, gatos em fila, pulo final com miado | AGORA NO TIKTOK / E NO INSTAGRAM / SEGUE A GENTE |
+| 0–3 s | Celular neon vibra; notificações "incoming signal…", "psst. look up", "MEOW MEOW MEOW"; orelha do Glitch no rodapé da tela | SOMETHING'S IN YOUR PHONE... |
+| 2,7–3 s | Glitch (GPT) sai do celular e atravessa a câmera; flash no drop | WE'RE OUT. |
+| 5 / 7 s | Lucky e Smoke saem do celular e dançam no beat | THE WEIRD CATS → ESCAPED. OBVIOUSLY. |
+| 8,7–9 s | Beanie (GPT) pula na câmera, flash ciano | AND WE'RE NOT LEAVING |
+| 11 s | Rosto gigante do Glitch bate na tela e a câmera atravessa | LIVING IN YOUR FEED |
+| 11–17 s | Caos: chuva de 20 gatos, strobe, câmera tremendo, feed rolando; de 13 s a 17 s o personagem gigante troca a cada beat | |
+| 17–19 s | Break glitch com o rosto piscando | ERROR: NORMAL CAT NOT FOUND |
+| 19–24 s | Logo, gatos em fila, pulo final com miado | NOW ON TIKTOK / + INSTAGRAM / FOLLOW US / TRUST THE COIN. |
 
-Textos principais ficam entre y≈150 e y≈1450, fora das abas do topo e da legenda do TikTok/Reels.
+Visual da marca: texto pixel com glow neon (sem contorno preto), celular escuro com borda rosa neon, fundo do quarto gerado no GPT.
 
 ## Assets
 
@@ -24,10 +26,14 @@ Textos principais ficam entre y≈150 e y≈1450, fora das abas do topo e da leg
 - Fundo: `assets/art/neon-room.mp4` em loop, cortado na vertical, com blur e push-in.
 - Logo: `assets/art/weird-cats-official-logo.png`.
 - Fontes: Press Start 2P e Silkscreen (Google Fonts, OFL). A Press Start 2P não tem maiúsculas acentuadas, então as frases com acento usam Silkscreen.
-- Trilha e SFX: chiptune sintetizado localmente (`.tesseract-work/audio/synth.py`), sem samples de terceiros.
+- SFX sintetizados localmente (`.tesseract-work/audio/`), sem samples de terceiros. Sem trilha.
 - Ficaram fora da chuva: ash, ember, mocha e smoke-laptop (cigarro) e flip (boné do McDonald's). **O Smoke original ainda aparece com cigarro no sprite.**
 
-## Trocar por arte gerada no GPT
+## Arte do GPT (`gpt/`)
+
+Usados: `background.png`, `cat-glitch-jump.png`, `cat-beanie-jump.png`, `cat-beanie-dance.png`, `cat-giant-face.png`. Qualquer um que faltar é pulado pelo build.
+
+## Trocar por arte gerada no GPT (legado)
 
 Salve os arquivos em `social/launch-video/gpt/` e rode o build de novo. O builder usa esses arquivos automaticamente:
 

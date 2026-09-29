@@ -77,15 +77,19 @@ def rect(name, start, end, size, color, pos, anchor=None, round_=0, stroke=None,
     return L
 
 
-def text(name, start, end, s, pos, size, font="PS", color=(1, 1, 1, 1), stroke=10, just="center", effects=None):
+def text(name, start, end, s, pos, size, font="PS", color=(1, 1, 1, 1), stroke=10, just="center", effects=None, glow=None):
     fam, sty = ("Press Start 2P", "Regular") if font == "PS" else ("Silkscreen", "Bold")
     L = {"type": "Text", "id": nid(), "name": name, "blendMode": "normal", "activeRange": rng(start, end),
          "transform": tf(pos),
          "sourceText": {"text": s, "fontFamily": fam, "fontStyle": sty, "fontSize": size,
-                        "fillColor": list(color), "strokeWidth": stroke, "strokeColor": [0, 0, 0, 1],
+                        "fillColor": list(color), "strokeWidth": stroke, "strokeColor": [0.035, 0, 0.07, 1],
                         "applyStroke": stroke > 0, "strokeOverFill": False, "justification": just}}
     if effects:
         L["effects"] = effects
+    if glow:
+        L["layerStyles"] = [{"id": nid(), "style": {"type": "outerGlow", "enabled": True, "color": list(glow),
+                                                    "size": max(18, size * 0.35), "spread": 8, "range": 50,
+                                                    "blendMode": "screen"}}]
     return L
 
 
@@ -137,7 +141,7 @@ if not os.path.exists(gpt_bg):
                          os.path.join(REPO, "assets/art/neon-room.mp4"), "--asset-id", "bg-neon-room"))
 logo = img_asset(os.path.join(REPO, "assets/art/weird-cats-official-logo.png"))
 AUDIO = {}
-for n in ("music-v2", "buzz", "pop", "slam", "glitch", "meow"):
+for n in ("buzz", "pop", "slam", "glitch", "meow", "whoosh", "impact", "riser"):
     run("project", "import-asset", "--project", PROJ, "--file", os.path.join(AUD, n + ".wav"),
         "--asset-id", "aud-" + n, "--kind", "audio")
     out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
@@ -173,11 +177,11 @@ else:
                           "source": {"assetId": "bg-neon-room", "fit": "cover"}})
         t0 += d
 for L in bg_layers:
-    L["effects"] = [{"id": nid(), "effect": {"type": "gaussianBlur", "blurriness": 6, "repeatEdgePixels": True}}]
+    L["effects"] = [{"id": nid(), "effect": {"type": "gaussianBlur", "blurriness": 2.5 if os.path.exists(gpt_bg) else 6, "repeatEdgePixels": True}}]
     start = L["activeRange"]["start"] / 1000
     # slow push-in over the whole video, continuous across the looped clips
-    anim(L["id"], "scaleX", f"var g=t+{start}; return 104+g*0.5;")
-    anim(L["id"], "scaleY", f"var g=t+{start}; return 104+g*0.5;")
+    anim(L["id"], "scaleX", f"var g=t+{start}; return 112+g*0.5;")
+    anim(L["id"], "scaleY", f"var g=t+{start}; return 112+g*0.5;")
 
 dim = rect("BG dim", 0, DUR, (W, H), (0.05, 0.0, 0.1, 1), (W / 2, H / 2))
 anim(dim["id"], "opacity", "if(t<3) return 62; if(t<3.3) return lerp(62,30,eo((t-3)/0.3)); if(t<19) return 30; return lerp(30,55,eo((t-19)/0.5));")
@@ -200,7 +204,7 @@ SX0, SY0 = PC[0] - SW / 2, PC[1] - SH / 2 + 10
 phone_children = []
 
 # notch + stickers (front)
-notch = rect("Phone notch", 0, DUR, (170, 36), BLACK, (PC[0], SY0 + 34), round_=18)
+notch = rect("Phone notch", 0, DUR, (170, 36), (0.16, 0.1, 0.24, 1), (PC[0], SY0 + 34), round_=18)
 st1 = rect("Sticker cyan", 0, DUR, (34, 34), CYAN, (PC[0] + PW / 2 - 40, PC[1] - PH / 2 + 40), round_=0, stroke=(5, BLACK))
 st2 = rect("Sticker yellow", 0, DUR, (26, 26), YELLOW, (PC[0] - PW / 2 + 38, PC[1] + PH / 2 - 60), stroke=(5, BLACK))
 st1["transform"]["rotation"] = 45
@@ -213,13 +217,13 @@ lock_bg = rect("Lock screen", 0, 3.0, (SW, SH), (0.14, 0.05, 0.26, 1), (PC[0], S
 clock = text("Lock clock", 0, 3.0, "23:59", (PC[0], SY0 + 190), 64, color=WHITE, stroke=0)
 anim(clock["id"], "textContent", "return t<2.6?'23:59':(h(Math.floor(t*20))>0.5?'??:??':'00:00');")
 notifs = []
-msgs = [(0.55, "psst..."), (1.45, "on my way"), (2.15, "MEOW MEOW MEOW")]
+msgs = [(0.55, "incoming signal..."), (1.45, "psst. look up"), (2.15, "MEOW MEOW MEOW")]
 for i, (at, body) in enumerate(msgs):
     y = SY0 + 330 + i * 172
-    card = rect("Notif card", 0, SH, (520, 150), (1, 1, 1, 0.96), (PC[0], y), round_=26, stroke=(5, BLACK))
+    card = rect("Notif card", 0, SH, (520, 150), (0.1, 0.04, 0.18, 0.97), (PC[0], y), round_=26, stroke=(4, PINK))
     icon = image("Notif icon", 0, 3.0, img_asset(frames["glitch"][0]), (PC[0] - 196, y + 58), (384, 832), 13)
     ttl = text("Notif title", 0, 3.0, "WEIRD CATS", (PC[0] - 132, y - 16), 26, color=PINK, stroke=0, just="left")
-    bod = text("Notif body", 0, 3.0, body, (PC[0] - 132, y + 40), 38, font="SK", color=BLACK, stroke=0, just="left")
+    bod = text("Notif body", 0, 3.0, body, (PC[0] - 132, y + 40), 38, font="SK", color=WHITE, stroke=0, just="left")
     for L in (card, icon, ttl, bod):
         L["activeRange"] = rng(0, 3.0 - at)
     g = group(f"Notification {i + 1}", at, 3.0, [bod, ttl, icon, card], (0, 0))
@@ -235,13 +239,13 @@ card_cols = [PINK, CYAN, YELLOW, (0.62, 0.36, 1, 1)]
 N, GAP = 8, 450
 for k in range(N * 2):
     y = SY0 + 280 + k * GAP
-    c = rect("Feed card", 0, 16.0, (480, 410), card_cols[k % 4], (PC[0], y), round_=28, stroke=(7, BLACK))
+    c = rect("Feed card", 0, 16.0, (480, 410), (0.09, 0.03, 0.17, 1), (PC[0], y), round_=28, stroke=(6, card_cols[k % 4]))
     im = image("Feed cat", 0, 16.0, img_asset(rain_files[(k * 3) % len(rain_files)]), (PC[0], y + 190), (384, 832), 44)
     feed_cards += [im, c]
 feed = group("Feed scroll", 3.0, 19.0, feed_cards)
 anim(feed["id"], "positionY",
      f"var g=t+3; var d=500*Math.min(g-3,8)+1500*Math.max(0,Math.min(g-11,6)); return -(d%{N * GAP});")
-feed_bg = rect("Feed bg", 3.0, 19.0, (SW, SH), (0.97, 0.94, 1, 1), (PC[0], SY0 + SH / 2))
+feed_bg = rect("Feed bg", 3.0, 19.0, (SW, SH), (0.035, 0, 0.07, 1), (PC[0], SY0 + SH / 2))
 scr = [peek] + notifs + [clock, lock_bg, feed, feed_bg]
 screen_group = group("Screen content", 0, 19.5, scr)
 matte = rect("Screen matte", 0, 19.5, (SW, SH), WHITE, (PC[0], SY0 + SH / 2), round_=60)
@@ -255,9 +259,9 @@ if os.path.exists(gpt_phone):
     # user-generated art (transparent PNG): centered on the phone, scaled so its height covers the phone body
     body = image("Phone body GPT", 0, 19.5, img_asset(gpt_phone), PC, (iw / 2, ih / 2), round(100 * (PH + 40) / ih, 2))
 else:
-    body = rect("Phone body", 0, 19.5, (PW, PH), PINK, PC, round_=86, stroke=(20, BLACK))
-    btn1 = rect("Phone button", 0, 19.5, (16, 120), BLACK, (PC[0] + PW / 2 + 6, PC[1] - 300), round_=6)
-    btn2 = rect("Phone button", 0, 19.5, (16, 80), BLACK, (PC[0] - PW / 2 - 6, PC[1] - 360), round_=6)
+    body = rect("Phone body", 0, 19.5, (PW, PH), (0.043, 0.024, 0.094, 1), PC, round_=86, stroke=(16, PINK))
+    btn1 = rect("Phone button", 0, 19.5, (16, 120), PINK, (PC[0] + PW / 2 + 6, PC[1] - 300), round_=6)
+    btn2 = rect("Phone button", 0, 19.5, (16, 80), PINK, (PC[0] - PW / 2 - 6, PC[1] - 360), round_=6)
     phone_children += [btn1, btn2]
 phone_children.append(body)
 phone_glow = {"type": "Rect", **rect("Phone glow", 0, 19.5, (PW + 40, PH + 40), PINK, PC, round_=100)}
@@ -282,16 +286,16 @@ anim(phone["id"], "scaleY", phone_scale + "var q=t>=3&&t<19?Math.exp(-(t-3)*14)*
 
 # ---------------------------------------------------------------- main cats
 CATS = [  # name, pop time, dance spot (feet), finale spot
-    ("glitch", 3.0, (290, 880), (170, 1700)),
-    ("lucky", 5.0, (800, 880), (410, 1700)),
-    ("smoke", 7.0, (200, 1720), (670, 1700)),
-    ("beanie", 9.0, (860, 1720), (910, 1700)),
+    ("glitch", 3.0, (290, 880), (170, 1790)),
+    ("lucky", 5.0, (800, 880), (410, 1790)),
+    ("smoke", 7.0, (200, 1720), (670, 1790)),
+    ("beanie", 9.0, (860, 1720), (910, 1790)),
 ]
 NAMES = {"glitch": "GLITCH", "lucky": "LUCKY", "smoke": "SMOKE", "beanie": "BEANIE"}
 cat_groups = []
 for name, S, (X, Y), (FX, FY) in CATS:
     kids = []
-    tag = text(f"{NAMES[name]} tag", 0.35, 19.0 - S, NAMES[name], (0, 130), 84, color=YELLOW, stroke=14)
+    tag = text(f"{NAMES[name]} tag", 0.35, 19.0 - S, NAMES[name], (0, 130), 84, color=(1, 0.97, 1, 1), stroke=6, glow=PINK)
     kids.append(tag)
     for k, path in enumerate(frames[name]):
         L = image(f"{name} frame {k}", 0, DUR - S, img_asset(path), (0, 0), (384, 832), 100)
@@ -346,14 +350,14 @@ for i in range(34):
 # ---------------------------------------------------------------- headlines
 HL_Y = 270
 heads = []
-typ = text("Hook type-on", 0.25, 3.0, "SOMETHING'S IN\nYOUR PHONE...", (90, 250), 72, font="SK", stroke=14, just="left")
+typ = text("Hook type-on", 0.25, 3.0, "SOMETHING'S IN\nYOUR PHONE...", (90, 250), 72, font="SK", stroke=6, just="left", glow=CYAN)
 anim(typ["id"], "textContent",
      "var s='SOMETHING\\'S IN\\nYOUR PHONE...'; var n=Math.floor(t*14); return s.substring(0,Math.min(n,s.length));")
 heads.append(typ)
 
 
 def slam(label, s, start, end, size=96, font="PS", color=WHITE, y=HL_Y, ca=True):
-    L = text(label, start, end, s, (540, y), size, font=font, color=color, stroke=16,
+    L = text(label, start, end, s, (540, y), size, font=font, color=color, stroke=7, glow=color,
              effects=[{"id": nid(), "effect": {"type": "chromaticAberration", "amount": 0.25, "direction": 0}}] if ca else None)
     anim(L["id"], "scaleX", "if(t<0.16) return lerp(190,100,eo(t/0.16)); var p=((t)/0.5)%1; return 100+5*Math.exp(-p*9);")
     anim(L["id"], "scaleY", "if(t<0.16) return lerp(190,100,eo(t/0.16)); var p=((t)/0.5)%1; return 100+5*Math.exp(-p*9);")
@@ -361,15 +365,15 @@ def slam(label, s, start, end, size=96, font="PS", color=WHITE, y=HL_Y, ca=True)
     return L
 
 
-heads.append(slam("WE'RE HERE!", "WE'RE HERE!", 3.0, 5.0, 84, color=PINK))
-heads.append(slam("THE WEIRD CATS", "THE WEIRD\nCATS", 5.0, 7.0, 92))
-heads.append(slam("ESCAPED THE PHONE", "ESCAPED\nTHE PHONE", 7.0, 9.0, 110, font="SK", color=CYAN))
-heads.append(slam("AND TAKING OVER", "AND TAKING\nOVER...", 9.0, 11.0, 80, color=YELLOW))
-feed_t = slam("YOUR FEED", "YOUR\nFEED", 11.0, 17.0, 150, color=PINK)
+heads.append(slam("WE'RE OUT.", "WE'RE OUT.", 3.0, 5.0, 90, color=PINK))
+heads.append(slam("THE WEIRD CATS", "THE WEIRD\nCATS", 5.0, 7.0, 92, color=(1, 0.97, 1, 1)))
+heads.append(slam("ESCAPED. OBVIOUSLY.", "ESCAPED.\nOBVIOUSLY.", 7.0, 9.0, 100, font="SK", color=CYAN))
+heads.append(slam("AND WE'RE NOT LEAVING", "AND WE'RE\nNOT LEAVING", 9.0, 11.0, 78, color=YELLOW))
+feed_t = slam("LIVING IN YOUR FEED", "LIVING IN\nYOUR FEED", 11.0, 17.0, 90, color=PINK)
 anim(feed_t["id"], "positionY", "return 270+Math.sin(t*Math.PI*4)*18;")
 heads.append(feed_t)
 err = text("Glitch error", 17.0, 19.0, "ERROR: NORMAL CAT\nNOT FOUND", (540, 900), 62, font="SK",
-           color=(1, 0.2, 0.25, 1), stroke=14)
+           color=(1, 0.3, 0.4, 1), stroke=8, glow=(1, 0.1, 0.3, 1))
 anim(err["id"], "positionX", "return 540+(h(Math.floor(t*14))-0.5)*70;")
 anim(err["id"], "opacity", "return h(Math.floor(t*16)+5)>0.18?100:0;")
 
@@ -378,19 +382,82 @@ logoL = image("LOGO", 19.0, DUR, logo, (540, 600), (768, 512), 64)
 anim(logoL["id"], "scaleX", "if(t<0.3) return lerp(260,64,ob(t/0.3)); var p=((t+19)/0.5)%1; return 64*(1+0.035*Math.exp(-p*9));")
 anim(logoL["id"], "scaleY", "if(t<0.3) return lerp(260,64,ob(t/0.3)); var p=((t+19)/0.5)%1; return 64*(1+0.035*Math.exp(-p*9));")
 anim(logoL["id"], "rotation", "if(t<0.3) return lerp(-25,0,eo(t/0.3)); return Math.sin(t*3)*2.5;")
-end1 = text("NOW ON TIKTOK", 19.45, DUR, "NOW ON TIKTOK", (540, 1060), 52, stroke=12)
-end2 = text("AND INSTAGRAM", 19.7, DUR, "AND INSTAGRAM", (540, 1155), 52, stroke=12)
+end1 = text("NOW ON TIKTOK", 19.45, DUR, "NOW ON TIKTOK", (540, 1060), 52, color=CYAN, stroke=6, glow=CYAN)
+end2 = text("+ INSTAGRAM", 19.7, DUR, "+ INSTAGRAM", (540, 1155), 52, color=CYAN, stroke=6, glow=CYAN)
 for L in (end1, end2):
     anim(L["id"], "positionX", "return lerp(1400,540,ob(t/0.3));")
-pill_txt = text("FOLLOW US", 0, DUR - 20.0, "FOLLOW US", (0, 22), 56, color=BLACK, stroke=0)
-pill_bg = rect("CTA pill", 0, DUR - 20.0, (760, 130), YELLOW, (0, 0), round_=65, stroke=(10, BLACK))
+pill_txt = text("FOLLOW US", 0, DUR - 20.0, "FOLLOW US", (0, 22), 56, color=(1, 0.97, 1, 1), stroke=0, glow=PINK)
+pill_bg = rect("CTA pill", 0, DUR - 20.0, (760, 130), (0.07, 0.02, 0.13, 0.92), (0, 0), round_=65, stroke=(8, PINK))
 pill = group("CTA", 20.0, DUR, [pill_txt, pill_bg], (540, 1320))
 anim(pill["id"], "scaleX", "if(t<0.25) return 100*ob(t/0.25); var p=((t+20)/0.5)%1; return 100+7*Math.exp(-p*9);")
 anim(pill["id"], "scaleY", "if(t<0.25) return 100*ob(t/0.25); var p=((t+20)/0.5)%1; return 100+7*Math.exp(-p*9);")
 anim(pill["id"], "rotation", "return Math.sin(t*Math.PI*2)*3;")
+coin = text("TRUST THE COIN.", 20.5, DUR, "TRUST THE COIN.", (540, 1450), 38, font="SK", color=(1, 0.66, 0.87, 1), stroke=0, glow=PINK)
+anim(coin["id"], "opacity", "return eo(t/0.3)*100*(h(Math.floor(t*10))>0.08?1:0.3);")
+
+# ---------------------------------------------------------------- GPT hero shots (skipped if a file is missing)
+heroes = []
+hero_sfx = []
+GPTF = {k: os.path.join(GPT, f"{k}.png") for k in ("cat-glitch-jump", "cat-beanie-jump", "cat-beanie-dance", "cat-giant-face")}
+have = {k: os.path.exists(v) for k, v in GPTF.items()}
+
+
+def leap(label, key, start, dur=0.36):
+    # character bursts out of the phone and flies through the camera, landing on the drop
+    L = image(label, start, start + dur, img_asset(GPTF[key]), (540, 1060), (540, 960), 10)
+    anim(L["id"], "scaleX", f"var q=cl(t/{dur}); return 10+330*q*q*q;")
+    anim(L["id"], "scaleY", f"var q=cl(t/{dur}); return 10+330*q*q*q;")
+    anim(L["id"], "rotation", f"return lerp(-40,12,eo(t/{dur}));")
+    anim(L["id"], "positionY", f"return lerp(1060,860,eo(t/{dur}));")
+    return L
+
+
+if have["cat-glitch-jump"]:
+    heroes.append(leap("LEAP Glitch", "cat-glitch-jump", 2.66))
+    hero_sfx.append((2.62, "whoosh", 0.7))
+if have["cat-beanie-jump"]:
+    heroes.append(leap("LEAP Beanie", "cat-beanie-jump", 8.66))
+    hero_sfx.append((8.62, "whoosh", 0.7))
+if have["cat-giant-face"]:
+    face = image("GIANT FACE slam", 11.0, 11.8, img_asset(GPTF["cat-giant-face"]), (540, 980), (540, 960), 120)
+    face["effects"] = [{"id": nid(), "effect": {"type": "chromaticAberration", "amount": 0.2, "direction": 0}}]
+    fs = "var s; if(t<0.14) s=lerp(240,92,eo(t/0.14)); else if(t<0.5) s=92+4*Math.sin(t*60); else s=92+900*Math.pow((t-0.5)/0.3,2); "
+    anim(face["id"], "scaleX", fs + "return s;")
+    anim(face["id"], "scaleY", fs + "return s;")
+    anim(face["id"], "rotation", "return t<0.5?(h(Math.floor(t*30))-0.5)*8:lerp(0,25,(t-0.5)/0.3);")
+    anim(face["id"], "opacity", "return t<0.55?100:100*(1-cl((t-0.55)/0.25));")
+    heroes.append(face)
+    hero_sfx.append((11.0, "impact", 0.9))
+    for s0 in (17.5, 18.33):
+        f2 = image(f"GIANT FACE glitch {s0}", s0, s0 + 0.17, img_asset(GPTF["cat-giant-face"]), (540, 960), (540, 960), 135)
+        f2["effects"] = [{"id": nid(), "effect": {"type": "shiftChannels", "takeRedFrom": "green", "takeGreenFrom": "blue", "takeBlueFrom": "red"}}]
+        heroes.append(f2)
+# chaos hero: characters swap on every beat, 13-17s
+cycle = [k for k in ("cat-beanie-dance", "cat-glitch-jump", "cat-beanie-jump", "cat-glitch-jump") if have[k]]
+hero_dance = []
+if cycle:
+    for i in range(8):
+        s0 = 13.0 + i * 0.5
+        k = cycle[i % len(cycle)]
+        L = image(f"HERO {k} {s0}", s0, s0 + 0.5, img_asset(GPTF[k]), (540, 1480), (540, 1500), 64)
+        flip = -1 if i % 2 else 1
+        anim(L["id"], "scaleX", f"var sq=Math.exp(-t*14); return {flip}*64*(1+0.12*sq);")
+        anim(L["id"], "scaleY", "var sq=Math.exp(-t*14); return 64*(1-0.16*sq);")
+        anim(L["id"], "positionY", "var p=t/0.5; return 1480-110*4*p*(1-p);")
+        anim(L["id"], "rotation", f"return {flip}*14*Math.sin(Math.PI*t/0.5);")
+        hero_dance.append(L)
+    # the sprite Beanie steps aside while the big one dances
+    for g in cat_groups:
+        if g["name"] == "CAT BEANIE":
+            anim(g["id"], "opacity", "var g=t+9; return (g>=13&&g<17)?0:100;")
+hero_dance.reverse()
 
 # ---------------------------------------------------------------- flashes + glitch adjustments + vignette
 flash1 = rect("Flash drop", 3.0, 3.35, (W, H), WHITE, (W / 2, H / 2))
+flash3 = rect("Flash beanie", 9.0, 9.25, (W, H), CYAN, (W / 2, H / 2))
+anim(flash3["id"], "opacity", "return 70*(1-eo(t/0.25));")
+flash4 = rect("Flash face", 11.0, 11.12, (W, H), PINK, (W / 2, H / 2))
+anim(flash4["id"], "opacity", "return 80*(1-t/0.12);")
 anim(flash1["id"], "opacity", "return 100*(1-eo(t/0.35));")
 flash2 = rect("Flash end", 19.0, 19.35, (W, H), PINK, (W / 2, H / 2))
 anim(flash2["id"], "opacity", "return 90*(1-eo(t/0.35));")
@@ -418,9 +485,28 @@ auds.append(audio("SFX glitch 17", "aud-glitch", 17.0, M["glitch"], 0.5))
 auds.append(audio("SFX glitch 18", "aud-glitch", 18.0, M["glitch"], 0.5))
 auds.append(audio("SFX slam end", "aud-slam", 19.0, M["slam"], 0.6))
 auds.append(audio("SFX meow", "aud-meow", 22.9, M["meow"], 0.6))
+auds.append(audio("SFX riser into chaos", "aud-riser", 9.95, M["riser"], 0.6))
+for at, k, v in hero_sfx:
+    auds.append(audio(f"SFX {k} {at}", "aud-" + k, at, M[k], v))
 
-layers = ([flash1, flash2, err] + glitch_adj + [vign] + heads + [end1, end2, pill] + cat_groups + [logoL]
-          + rain + [phone] + strobe + [dim] + bg_layers + auds)
+scene = ([err] + glitch_adj + heroes + heads + [end1, end2, pill, coin] + hero_dance + cat_groups + [logoL]
+         + rain + [phone] + strobe + [dim] + bg_layers)
+camera = group("CAMERA shake", 0, DUR, scene, (W / 2, H / 2), (W / 2, H / 2))
+# beat punches everywhere, big hits on the drops, heavy shake in the chaos and glitch sections
+cam_amp = ("var b=t/0.5; var p=b-Math.floor(b); var A=0;"
+           "if(t>=3&&t<3.5) A=40*Math.exp(-(t-3)*7); if(t>=9&&t<9.4) A=28*Math.exp(-(t-9)*8);"
+           "if(t>=11&&t<17) A=12+36*Math.exp(-(t-11)*5); if(t>=17&&t<19) A=26; if(t>=19&&t<19.5) A=30*Math.exp(-(t-19)*7);")
+anim(camera["id"], "positionX", cam_amp + "return 540+(h(Math.floor(t*30))-0.5)*2*A;")
+anim(camera["id"], "positionY", cam_amp + "return 960+(h(Math.floor(t*30)+99)-0.5)*2*A;")
+anim(camera["id"], "rotation", "if(t>=11&&t<17) return Math.sin(t*Math.PI*2)*2.5+(h(Math.floor(t*15))-0.5)*3;"
+                               "if(t>=17&&t<19) return (h(Math.floor(t*12)+5)-0.5)*8; return 0;")
+cam_scale = ("var b=t/0.5; var p=b-Math.floor(b); var k=t<3?0:((t>=11&&t<17)?7:3.5);"
+             "var s=100+k*Math.exp(-p*10);"
+             "if(t>=3) s+=14*Math.exp(-(t-3)*6); if(t>=11) s+=18*Math.exp(-(t-11)*6); if(t>=19) s+=10*Math.exp(-(t-19)*6);"
+             "if(t<3) s+=t*1.2;")
+anim(camera["id"], "scaleX", cam_scale + "return s;")
+anim(camera["id"], "scaleY", cam_scale + "return s;")
+layers = [flash1, flash2, flash3, flash4, vign, camera] + auds
 doc = {"$schema": "https://jerboa.dev/schemas/fx-composition/editable/v1/document.schema.json",
        "formatVersion": 1, "dimensions": {"width": W, "height": H}, "duration": DUR,
        "backgroundColor": list(PURPLE),
