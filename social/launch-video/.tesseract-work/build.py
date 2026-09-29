@@ -213,7 +213,7 @@ lock_bg = rect("Lock screen", 0, 3.0, (SW, SH), (0.14, 0.05, 0.26, 1), (PC[0], S
 clock = text("Lock clock", 0, 3.0, "23:59", (PC[0], SY0 + 190), 64, color=WHITE, stroke=0)
 anim(clock["id"], "textContent", "return t<2.6?'23:59':(h(Math.floor(t*20))>0.5?'??:??':'00:00');")
 notifs = []
-msgs = [(0.55, "psiu..."), (1.45, "tô chegando"), (2.15, "MIAU MIAU MIAU")]
+msgs = [(0.55, "psst..."), (1.45, "on my way"), (2.15, "MEOW MEOW MEOW")]
 for i, (at, body) in enumerate(msgs):
     y = SY0 + 330 + i * 172
     card = rect("Notif card", 0, SH, (520, 150), (1, 1, 1, 0.96), (PC[0], y), round_=26, stroke=(5, BLACK))
@@ -346,9 +346,9 @@ for i in range(34):
 # ---------------------------------------------------------------- headlines
 HL_Y = 270
 heads = []
-typ = text("Hook type-on", 0.25, 3.0, "TEM ALGO NO\nSEU CELULAR...", (100, 250), 86, font="SK", stroke=14, just="left")
+typ = text("Hook type-on", 0.25, 3.0, "SOMETHING'S IN\nYOUR PHONE...", (90, 250), 72, font="SK", stroke=14, just="left")
 anim(typ["id"], "textContent",
-     "var s='TEM ALGO NO\\nSEU CELULAR...'; var n=Math.floor(t*14); return s.substring(0,Math.min(n,s.length));")
+     "var s='SOMETHING\\'S IN\\nYOUR PHONE...'; var n=Math.floor(t*14); return s.substring(0,Math.min(n,s.length));")
 heads.append(typ)
 
 
@@ -361,14 +361,14 @@ def slam(label, s, start, end, size=96, font="PS", color=WHITE, y=HL_Y, ca=True)
     return L
 
 
-heads.append(slam("CHEGAMOS!", "CHEGAMOS!", 3.0, 5.0, 100, color=PINK))
-heads.append(slam("OS WEIRD CATS", "OS WEIRD\nCATS", 5.0, 7.0, 92))
-heads.append(slam("SAÍMOS DO CELULAR", "SAÍMOS DO\nCELULAR", 7.0, 9.0, 110, font="SK", color=CYAN))
-heads.append(slam("E VAMOS INVADIR", "E VAMOS\nINVADIR...", 9.0, 11.0, 88, color=YELLOW))
-feed_t = slam("O SEU FEED", "O SEU\nFEED", 11.0, 17.0, 150, color=PINK)
+heads.append(slam("WE'RE HERE!", "WE'RE HERE!", 3.0, 5.0, 84, color=PINK))
+heads.append(slam("THE WEIRD CATS", "THE WEIRD\nCATS", 5.0, 7.0, 92))
+heads.append(slam("ESCAPED THE PHONE", "ESCAPED\nTHE PHONE", 7.0, 9.0, 110, font="SK", color=CYAN))
+heads.append(slam("AND TAKING OVER", "AND TAKING\nOVER...", 9.0, 11.0, 80, color=YELLOW))
+feed_t = slam("YOUR FEED", "YOUR\nFEED", 11.0, 17.0, 150, color=PINK)
 anim(feed_t["id"], "positionY", "return 270+Math.sin(t*Math.PI*4)*18;")
 heads.append(feed_t)
-err = text("Glitch error", 17.0, 19.0, "ERRO: GATO NORMAL\nNÃO ENCONTRADO", (540, 900), 62, font="SK",
+err = text("Glitch error", 17.0, 19.0, "ERROR: NORMAL CAT\nNOT FOUND", (540, 900), 62, font="SK",
            color=(1, 0.2, 0.25, 1), stroke=14)
 anim(err["id"], "positionX", "return 540+(h(Math.floor(t*14))-0.5)*70;")
 anim(err["id"], "opacity", "return h(Math.floor(t*16)+5)>0.18?100:0;")
@@ -378,11 +378,11 @@ logoL = image("LOGO", 19.0, DUR, logo, (540, 600), (768, 512), 64)
 anim(logoL["id"], "scaleX", "if(t<0.3) return lerp(260,64,ob(t/0.3)); var p=((t+19)/0.5)%1; return 64*(1+0.035*Math.exp(-p*9));")
 anim(logoL["id"], "scaleY", "if(t<0.3) return lerp(260,64,ob(t/0.3)); var p=((t+19)/0.5)%1; return 64*(1+0.035*Math.exp(-p*9));")
 anim(logoL["id"], "rotation", "if(t<0.3) return lerp(-25,0,eo(t/0.3)); return Math.sin(t*3)*2.5;")
-end1 = text("AGORA NO TIKTOK", 19.45, DUR, "AGORA NO TIKTOK", (540, 1060), 52, stroke=12)
-end2 = text("E NO INSTAGRAM", 19.7, DUR, "E NO INSTAGRAM", (540, 1155), 52, stroke=12)
+end1 = text("NOW ON TIKTOK", 19.45, DUR, "NOW ON TIKTOK", (540, 1060), 52, stroke=12)
+end2 = text("AND INSTAGRAM", 19.7, DUR, "AND INSTAGRAM", (540, 1155), 52, stroke=12)
 for L in (end1, end2):
     anim(L["id"], "positionX", "return lerp(1400,540,ob(t/0.3));")
-pill_txt = text("SEGUE A GENTE", 0, DUR - 20.0, "SEGUE A GENTE", (0, 22), 46, color=BLACK, stroke=0)
+pill_txt = text("FOLLOW US", 0, DUR - 20.0, "FOLLOW US", (0, 22), 56, color=BLACK, stroke=0)
 pill_bg = rect("CTA pill", 0, DUR - 20.0, (760, 130), YELLOW, (0, 0), round_=65, stroke=(10, BLACK))
 pill = group("CTA", 20.0, DUR, [pill_txt, pill_bg], (540, 1320))
 anim(pill["id"], "scaleX", "if(t<0.25) return 100*ob(t/0.25); var p=((t+20)/0.5)%1; return 100+7*Math.exp(-p*9);")
@@ -408,7 +408,7 @@ vign = adjust("Vignette", 0, DUR, [{"type": "vignette", "amount": 0.45, "radius"
 
 # ---------------------------------------------------------------- audio
 M = AUDIO
-auds = [audio("Music chiptune bed", "aud-music-v2", 0, M["music-v2"], 0.55)]
+auds = []  # music comes from a trending Reels/TikTok track added in-app
 for b in BUZZ:
     auds.append(audio(f"SFX buzz {b}", "aud-buzz", b, M["buzz"], 0.55))
 auds.append(audio("SFX slam drop", "aud-slam", 3.0, M["slam"], 0.6))
