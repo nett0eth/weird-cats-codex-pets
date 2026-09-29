@@ -135,7 +135,7 @@ def img_asset(path):
 
 
 gpt_bg = os.path.join(GPT, "background.png")
-gpt_phone = os.path.join(GPT, "phone.png")
+gpt_phone = os.path.join(GPT, "phone-open.png")
 if not os.path.exists(gpt_bg):
     bgv = json.loads(run("project", "import-video", "--project", PROJ, "--file",
                          os.path.join(REPO, "assets/art/neon-room.mp4"), "--asset-id", "bg-neon-room"))
@@ -246,7 +246,14 @@ feed = group("Feed scroll", 3.0, 19.0, feed_cards)
 anim(feed["id"], "positionY",
      f"var g=t+3; var d=500*Math.min(g-3,8)+1500*Math.max(0,Math.min(g-11,6)); return -(d%{N * GAP});")
 feed_bg = rect("Feed bg", 3.0, 19.0, (SW, SH), (0.035, 0, 0.07, 1), (PC[0], SY0 + SH / 2))
-scr = [peek] + notifs + [clock, lock_bg, feed, feed_bg]
+portal_l = []
+if os.path.exists(os.path.join(GPT, "portal.png")):
+    pl = image("Portal", 2.3, 3.4, img_asset(os.path.join(GPT, "portal.png")), (PC[0], SY0 + SH / 2), (540, 960), 1)
+    anim(pl["id"], "scaleX", "return 1+80*eo(t/0.7);")
+    anim(pl["id"], "scaleY", "return 1+80*eo(t/0.7);")
+    anim(pl["id"], "rotation", "return -t*540;")
+    portal_l.append(pl)
+scr = portal_l + [peek] + notifs + [clock, lock_bg, feed, feed_bg]
 screen_group = group("Screen content", 0, 19.5, scr)
 matte = rect("Screen matte", 0, 19.5, (SW, SH), WHITE, (PC[0], SY0 + SH / 2), round_=60)
 screen_group["trackMatte"] = {"layer": matte["id"], "mode": "alpha"}
@@ -257,13 +264,23 @@ if os.path.exists(gpt_phone):
     from PIL import Image as _I
     iw, ih = _I.open(gpt_phone).size
     # user-generated art (transparent PNG): centered on the phone, scaled so its height covers the phone body
-    body = image("Phone body GPT", 0, 19.5, img_asset(gpt_phone), PC, (iw / 2, ih / 2), round(100 * (PH + 40) / ih, 2))
+    # screen hole in phone-open.png is x220-861, y319-1572: map it onto the matte (SW x SH at screen centre)
+    body = image("Phone body GPT", 0, 19.5, img_asset(gpt_phone), (PC[0], SY0 + SH / 2), (540.5, 945.5), 87)
+    phone_children[:] = [c for c in phone_children if c["name"] not in ("Phone notch", "Sticker cyan", "Sticker yellow")]
+    cracked = os.path.join(GPT, "phone-cracked.png")
+    if os.path.exists(cracked):
+        ck = image("Phone CRACKED", 2.85, 3.6, img_asset(cracked), (PC[0], SY0 + SH / 2), (540.5, 945.5), 87)
+        anim(ck["id"], "opacity", "return t<0.55?100:100*(1-(t-0.55)/0.2);")
+        phone_children.insert(0, ck)
 else:
     body = rect("Phone body", 0, 19.5, (PW, PH), (0.043, 0.024, 0.094, 1), PC, round_=86, stroke=(16, PINK))
     btn1 = rect("Phone button", 0, 19.5, (16, 120), PINK, (PC[0] + PW / 2 + 6, PC[1] - 300), round_=6)
     btn2 = rect("Phone button", 0, 19.5, (16, 80), PINK, (PC[0] - PW / 2 - 6, PC[1] - 360), round_=6)
     phone_children += [btn1, btn2]
-phone_children.append(body)
+if os.path.exists(gpt_phone):
+    phone_children.insert(1 if phone_children and phone_children[0]["name"] == "Phone CRACKED" else 0, body)
+else:
+    phone_children.append(body)
 phone_glow = {"type": "Rect", **rect("Phone glow", 0, 19.5, (PW + 40, PH + 40), PINK, PC, round_=100)}
 phone_glow["effects"] = [{"id": nid(), "effect": {"type": "gaussianBlur", "blurriness": 60}}]
 anim(phone_glow["id"], "opacity", "var p=(t/0.5)%1; return t<3?35:45+35*Math.exp(-p*6);")
@@ -382,23 +399,42 @@ logoL = image("LOGO", 19.0, DUR, logo, (540, 600), (768, 512), 64)
 anim(logoL["id"], "scaleX", "if(t<0.3) return lerp(260,64,ob(t/0.3)); var p=((t+19)/0.5)%1; return 64*(1+0.035*Math.exp(-p*9));")
 anim(logoL["id"], "scaleY", "if(t<0.3) return lerp(260,64,ob(t/0.3)); var p=((t+19)/0.5)%1; return 64*(1+0.035*Math.exp(-p*9));")
 anim(logoL["id"], "rotation", "if(t<0.3) return lerp(-25,0,eo(t/0.3)); return Math.sin(t*3)*2.5;")
-end1 = text("NOW ON TIKTOK", 19.45, DUR, "NOW ON TIKTOK", (540, 1060), 52, color=CYAN, stroke=6, glow=CYAN)
-end2 = text("+ INSTAGRAM", 19.7, DUR, "+ INSTAGRAM", (540, 1155), 52, color=CYAN, stroke=6, glow=CYAN)
-for L in (end1, end2):
-    anim(L["id"], "positionX", "return lerp(1400,540,ob(t/0.3));")
+def logo_line(label, start, parts, y):
+    # parts: text or ("logo", key); monospace 52px advance per char, 18px gaps around 100px icons
+    kids, x = [], 0
+    widths = [len(p) * 52 if isinstance(p, str) else 100 for p in parts]
+    total = sum(widths) + 18 * (len(parts) - 1)
+    x = 540 - total / 2
+    for p, w_ in zip(parts, widths):
+        if isinstance(p, str):
+            kids.append(text(f"{label} '{p}'", 0, DUR - start, p, (x, y), 52, color=CYAN, stroke=6, glow=CYAN, just="left"))
+        elif os.path.exists(os.path.join(GPT, p[1] + ".png")):
+            ic = image(f"{label} icon", 0, DUR - start, img_asset(os.path.join(GPT, p[1] + ".png")), (x + 50, y - 22), (540, 540), 9.5)
+            anim(ic["id"], "rotation", f"var b=(t+{start})/0.5; return Math.sin(b*Math.PI)*10;")
+            anim(ic["id"], "scaleX", f"var b=(t+{start})/0.5; var p=b-Math.floor(b); return 9.5*(1+0.15*Math.exp(-p*10));")
+            anim(ic["id"], "scaleY", f"var b=(t+{start})/0.5; var p=b-Math.floor(b); return 9.5*(1+0.15*Math.exp(-p*10));")
+            kids.append(ic)
+        x += w_ + 18
+    g = group(label, start, DUR, kids)
+    anim(g["id"], "positionX", "return lerp(900,0,ob(t/0.3));")
+    return g
+
+
+end1 = logo_line("NOW ON TIKTOK", 19.45, ["NOW ON", ("logo", "logo-tiktok"), "TIKTOK"], 1060)
+end2 = logo_line("+ INSTAGRAM", 19.7, ["+", ("logo", "logo-instagram"), "INSTAGRAM"], 1175)
 pill_txt = text("FOLLOW US", 0, DUR - 20.0, "FOLLOW US", (0, 22), 56, color=(1, 0.97, 1, 1), stroke=0, glow=PINK)
 pill_bg = rect("CTA pill", 0, DUR - 20.0, (760, 130), (0.07, 0.02, 0.13, 0.92), (0, 0), round_=65, stroke=(8, PINK))
-pill = group("CTA", 20.0, DUR, [pill_txt, pill_bg], (540, 1320))
+pill = group("CTA", 20.0, DUR, [pill_txt, pill_bg], (540, 1335))
 anim(pill["id"], "scaleX", "if(t<0.25) return 100*ob(t/0.25); var p=((t+20)/0.5)%1; return 100+7*Math.exp(-p*9);")
 anim(pill["id"], "scaleY", "if(t<0.25) return 100*ob(t/0.25); var p=((t+20)/0.5)%1; return 100+7*Math.exp(-p*9);")
 anim(pill["id"], "rotation", "return Math.sin(t*Math.PI*2)*3;")
-coin = text("TRUST THE COIN.", 20.5, DUR, "TRUST THE COIN.", (540, 1450), 38, font="SK", color=(1, 0.66, 0.87, 1), stroke=0, glow=PINK)
+coin = text("NORMAL CATS NOT ALLOWED.", 20.5, DUR, "NORMAL CATS NOT ALLOWED.", (540, 1465), 38, font="SK", color=(1, 0.66, 0.87, 1), stroke=0, glow=PINK)
 anim(coin["id"], "opacity", "return eo(t/0.3)*100*(h(Math.floor(t*10))>0.08?1:0.3);")
 
 # ---------------------------------------------------------------- GPT hero shots (skipped if a file is missing)
 heroes = []
 hero_sfx = []
-GPTF = {k: os.path.join(GPT, f"{k}.png") for k in ("cat-glitch-jump", "cat-beanie-jump", "cat-beanie-dance", "cat-giant-face")}
+GPTF = {k: os.path.join(GPT, f"{k}.png") for k in ("cat-glitch-jump", "cat-beanie-jump", "cat-beanie-dance", "cat-giant-face", "cat-lucky-jump", "cat-lucky-dance", "cat-smoke-jump", "cat-smoke-dance", "cat-paw", "meow-burst", "signal-frame", "logo-tiktok", "logo-instagram")}
 have = {k: os.path.exists(v) for k, v in GPTF.items()}
 
 
@@ -415,6 +451,10 @@ def leap(label, key, start, dur=0.36):
 if have["cat-glitch-jump"]:
     heroes.append(leap("LEAP Glitch", "cat-glitch-jump", 2.66))
     hero_sfx.append((2.62, "whoosh", 0.7))
+for key, at in (("cat-lucky-jump", 4.66), ("cat-smoke-jump", 6.66)):
+    if have[key]:
+        heroes.append(leap("LEAP " + key[4:-5].title(), key, at))
+        hero_sfx.append((at - 0.04, "whoosh", 0.6))
 if have["cat-beanie-jump"]:
     heroes.append(leap("LEAP Beanie", "cat-beanie-jump", 8.66))
     hero_sfx.append((8.62, "whoosh", 0.7))
@@ -433,7 +473,7 @@ if have["cat-giant-face"]:
         f2["effects"] = [{"id": nid(), "effect": {"type": "shiftChannels", "takeRedFrom": "green", "takeGreenFrom": "blue", "takeBlueFrom": "red"}}]
         heroes.append(f2)
 # chaos hero: characters swap on every beat, 13-17s
-cycle = [k for k in ("cat-beanie-dance", "cat-glitch-jump", "cat-beanie-jump", "cat-glitch-jump") if have[k]]
+cycle = [k for k in ("cat-beanie-dance", "cat-lucky-jump", "cat-smoke-dance", "cat-glitch-jump", "cat-lucky-dance", "cat-beanie-jump", "cat-smoke-jump", "cat-glitch-jump") if have[k]]
 hero_dance = []
 if cycle:
     for i in range(8):
@@ -451,6 +491,58 @@ if cycle:
         if g["name"] == "CAT BEANIE":
             anim(g["id"], "opacity", "var g=t+9; return (g>=13&&g<17)?0:100;")
 hero_dance.reverse()
+
+# paw swipes over everything into the end card; MEOW! burst lands on the final meow
+if have["cat-paw"]:
+    paw = image("PAW wipe", 18.55, 19.12, img_asset(GPTF["cat-paw"]), (540, 2900), (540, 960), 175)
+    anim(paw["id"], "positionY", "return lerp(2900,1050,eo(t/0.38));")
+    anim(paw["id"], "rotation", "return lerp(12,-4,eo(t/0.38));")
+    heroes.insert(0, paw)
+    hero_sfx.append((18.5, "whoosh", 0.8))
+meow_l = []
+if have["meow-burst"]:
+    mb = image("MEOW burst", 22.88, DUR, img_asset(GPTF["meow-burst"]), (540, 880), (540, 960), 1)
+    ms = "var s=t<0.22?85*ob(t/0.22):85*(1+0.05*Math.sin(t*25)*Math.exp(-(t-0.22)*3));"
+    anim(mb["id"], "scaleX", ms + "return s;")
+    anim(mb["id"], "scaleY", ms + "return s;")
+    anim(mb["id"], "rotation", "return t<0.22?lerp(-30,-6,t/0.22):-6+Math.sin(t*20)*3*Math.exp(-t*2);")
+    meow_l.append(mb)
+# signal HUD frame over the hook and the glitch break
+hud = []
+if have["signal-frame"]:
+    for a0, a1 in ((0, 3.0), (17.0, 19.0)):
+        f = image(f"Signal frame {a0}", a0, a1, img_asset(GPTF["signal-frame"]), (540, 960), (540, 960), 100)
+        anim(f["id"], "opacity", "return 70+30*(h(Math.floor(t*8))>0.2?1:0);")
+        hud.append(f)
+# stickers pop on the beat around the edges (5-11s) and fall with the rain (11-17s)
+stk_files = sorted(glob.glob(os.path.join(GPT, "stickers", "*.png")))
+stickers = []
+spots = [(130, 560), (950, 600), (120, 1260), (960, 1300), (180, 470), (900, 1450), (140, 1500), (940, 460)]
+for i in range(12) if stk_files else []:
+    at = 5.0 + i * 0.5
+    x, y = spots[i % len(spots)]
+    L = image(f"Sticker pop {at}", at, at + 0.5, img_asset(stk_files[i % len(stk_files)]), (x, y), (130, 110), 1)
+    anim(L["id"], "scaleX", "return t<0.12?95*ob(t/0.12):95*(1-eo((t-0.35)/0.15));")
+    anim(L["id"], "scaleY", "return t<0.12?95*ob(t/0.12):95*(1-eo((t-0.35)/0.15));")
+    anim(L["id"], "rotation", f"return {(-1) ** i * 14}+t*{(-1) ** i * 40};")
+    stickers.append(L)
+for i in range(14) if stk_files else []:
+    st = 11.2 + (i * 0.41) % 5.4
+    x = 90 + ((i * 331) % 900)
+    L = image(f"Sticker rain {i}", st, min(17.0, st + 1.6), img_asset(stk_files[(i * 3) % len(stk_files)]), (x, -200), (130, 110), 110)
+    anim(L["id"], "positionY", "return lerp(-200,2200,t/1.6);")
+    anim(L["id"], "rotation", f"return t*{((i * 83) % 400) - 200};")
+    stickers.append(L)
+# platform logos bounce with the cats in the chaos section
+plat = []
+for key, x, ph in (("logo-tiktok", 175, 0), ("logo-instagram", 905, 1)):
+    if have[key]:
+        L = image(key.upper(), 11.8, 17.0, img_asset(GPTF[key]), (x, 1300), (540, 540), 32)
+        anim(L["id"], "positionY", f"var g=t+11.8; var b=g/0.5+{ph * 0.5}; var p=b-Math.floor(b); return 1300-120*4*p*(1-p);")
+        anim(L["id"], "scaleX", f"var g=t+11.8; var b=g/0.5+{ph * 0.5}; var p=b-Math.floor(b); var s=t<0.2?32*ob(t/0.2):32; return s*(1+0.12*Math.exp(-p*12));")
+        anim(L["id"], "scaleY", f"var g=t+11.8; var b=g/0.5+{ph * 0.5}; var p=b-Math.floor(b); var s=t<0.2?32*ob(t/0.2):32; return s*(1-0.16*Math.exp(-p*12));")
+        anim(L["id"], "rotation", f"var g=t+11.8; return Math.sin(g*Math.PI*2+{ph * 3.14})*16;")
+        plat.append(L)
 
 # ---------------------------------------------------------------- flashes + glitch adjustments + vignette
 flash1 = rect("Flash drop", 3.0, 3.35, (W, H), WHITE, (W / 2, H / 2))
@@ -489,8 +581,8 @@ auds.append(audio("SFX riser into chaos", "aud-riser", 9.95, M["riser"], 0.6))
 for at, k, v in hero_sfx:
     auds.append(audio(f"SFX {k} {at}", "aud-" + k, at, M[k], v))
 
-scene = ([err] + glitch_adj + heroes + heads + [end1, end2, pill, coin] + hero_dance + cat_groups + [logoL]
-         + rain + [phone] + strobe + [dim] + bg_layers)
+scene = (hud + [err] + glitch_adj + meow_l + heroes + heads + [end1, end2, pill, coin] + hero_dance + plat + stickers
+         + cat_groups + [logoL] + rain + [phone] + strobe + [dim] + bg_layers)
 camera = group("CAMERA shake", 0, DUR, scene, (W / 2, H / 2), (W / 2, H / 2))
 # beat punches everywhere, big hits on the drops, heavy shake in the chaos and glitch sections
 cam_amp = ("var b=t/0.5; var p=b-Math.floor(b); var A=0;"

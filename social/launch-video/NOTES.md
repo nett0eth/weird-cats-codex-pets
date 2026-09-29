@@ -16,7 +16,7 @@
 | 11 s | Rosto gigante do Glitch bate na tela e a câmera atravessa | LIVING IN YOUR FEED |
 | 11–17 s | Caos: chuva de 20 gatos, strobe, câmera tremendo, feed rolando; de 13 s a 17 s o personagem gigante troca a cada beat | |
 | 17–19 s | Break glitch com o rosto piscando | ERROR: NORMAL CAT NOT FOUND |
-| 19–24 s | Logo, gatos em fila, pulo final com miado | NOW ON TIKTOK / + INSTAGRAM / FOLLOW US / TRUST THE COIN. |
+| 19–24 s | Logo, gatos em fila, pulo final com miado | NOW ON TIKTOK / + INSTAGRAM / FOLLOW US / NORMAL CATS NOT ALLOWED. |
 
 Visual da marca: texto pixel com glow neon (sem contorno preto), celular escuro com borda rosa neon, fundo do quarto gerado no GPT.
 
@@ -31,7 +31,7 @@ Visual da marca: texto pixel com glow neon (sem contorno preto), celular escuro 
 
 ## Arte do GPT (`gpt/`)
 
-Usados: `background.png`, `cat-glitch-jump.png`, `cat-beanie-jump.png`, `cat-beanie-dance.png`, `cat-giant-face.png`. Qualquer um que faltar é pulado pelo build.
+Usados: fundo, celular (`phone-open.png` = `phone.png` com a tela vazada), celular rachado, portal, pulos/danças do Glitch, Lucky, Smoke e Beanie, rosto gigante, pata (transição 18,5 s), MEOW! (22,9 s), moldura de sinal (0–3 s e 17–19 s), stickers recortados em `gpt/stickers/` e logos pixeladas do TikTok e Instagram (pulando no caos e na tela final). Qualquer arquivo que faltar é pulado pelo build.
 
 ## Trocar por arte gerada no GPT (legado)
 
