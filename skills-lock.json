@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "tesseract-design": {
+      "source": "mirage-hq/Tesseract",
+      "sourceType": "github",
+      "skillPath": "skills/tesseract-design/SKILL.md",
+      "computedHash": "721201080430124515cd31fe14c8808b18327c94d49672f2abd66c9252875f50"
+    },
+    "tesseract-editor": {
+      "source": "mirage-hq/Tesseract",
+      "sourceType": "github",
+      "skillPath": "skills/tesseract-editor/SKILL.md",
+      "computedHash": "0dd0e8e626a53e5039e2d9ec23d2e0dd6254fea2631ed6a53a81f182592ea54c"
+    },
+    "tesseract-motion": {
+      "source": "mirage-hq/Tesseract",
+      "sourceType": "github",
+      "skillPath": "skills/tesseract-motion/SKILL.md",
+      "computedHash": "5260869bb5ddaa9c6dc41d16fa642449ee62f395445c0a9e3545bfd45c6af779"
+    },
+    "tesseract-video": {
+      "source": "mirage-hq/Tesseract",
+      "sourceType": "github",
+      "skillPath": "skills/tesseract-video/SKILL.md",
+      "computedHash": "299b7a72079d6f4f5b7f50fc1c01b8c1dcef6de16b31006eff1bb6b42c7f6732"
+    }
+  }
+}
