@@ -1,0 +1,6 @@
+[submodule "contracts/lib/seadrop"]
+	path = contracts/lib/seadrop
+	url = https://github.com/ProjectOpenSea/seadrop
+[submodule "contracts/lib/forge-std"]
+	path = contracts/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
