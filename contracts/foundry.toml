@@ -1,0 +1,20 @@
+[profile.default]
+src = "src"
+test = "test"
+script = "script"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.17"
+# Robinhood Chain is an Arbitrum chain; paris avoids newer opcodes.
+evm_version = "paris"
+optimizer = true
+optimizer_runs = 10_000
+bytecode_hash = "none"
+remappings = [
+    "seadrop/=lib/seadrop/src/",
+    "ERC721A/=lib/seadrop/lib/ERC721A/contracts/",
+    "solmate/=lib/seadrop/lib/solmate/src/",
+    "utility-contracts/=lib/seadrop/lib/utility-contracts/src/",
+    "openzeppelin-contracts/=lib/seadrop/lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/",
+]

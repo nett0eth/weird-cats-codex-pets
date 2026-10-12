@@ -42,3 +42,7 @@ The website gallery has its own four-pet catalog. To add another character to th
 ## Local preview
 
 Serve the repository root with any static HTTP server and open `index.html`. Fetching `pets.json` requires HTTP rather than opening the file directly.
+
+## NFT contract
+
+The Weird Cats ERC-721 contract for Robinhood Chain lives in [`contracts/`](contracts/README.md). It is SeaDrop-compatible for OpenSea drops and also has its own allowlist and public mint.
