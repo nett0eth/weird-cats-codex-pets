@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Weird Cats Live</title>
+<style>
+:root{--page:#0c0d0f;--ink:#e9e6f0;--muted:#8b8796}
+html,body{margin:0;min-height:100%;background:var(--page);color:var(--ink);font-family:ui-monospace,Menlo,Consolas,monospace}
+body{touch-action:none}
+.wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;width:min(100% - 32px,880px);margin:24px auto}
+.nft{position:relative;aspect-ratio:1;overflow:hidden;cursor:crosshair}
+.cat{position:absolute;left:0;top:0;width:192px;height:208px;background-repeat:no-repeat;background-size:1536px 2288px;image-rendering:pixelated;transform-origin:0 0;pointer-events:none}
+.label{margin-top:6px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+.label b{color:var(--ink);font-weight:600}
+p.hint{text-align:center;font-size:12px;color:var(--muted);margin:0 16px 24px}
+body.single .wrap{display:block;width:100vmin;margin:0 auto}
+body.single .label,body.single p.hint{display:none}
+body.single{display:grid;place-items:center;height:100vh;overflow:hidden}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap"></div>
+<p class="hint">800x800 com o fundo canônico de cada gato. Mexa o cursor ou arraste o dedo.</p>
+<script>
+const CATS = __CATS__;
+(() => {
+  const CW = 192, CH = 208;
+  const wrap = document.getElementById('wrap');
+  const pick = new URLSearchParams(location.search).get('cat');
+  const list = pick && CATS.some(c => c.name.toLowerCase() === pick.toLowerCase())
+    ? CATS.filter(c => c.name.toLowerCase() === pick.toLowerCase()) : CATS;
+  if (list.length === 1) document.body.classList.add('single');
+
+  const tiles = list.map(c => {
+    const box = document.createElement('div');
+    const nft = document.createElement('div'); nft.className = 'nft'; nft.style.background = c.bg;
+    const cat = document.createElement('div'); cat.className = 'cat'; cat.style.backgroundImage = `url(${c.src})`;
+    nft.appendChild(cat); box.appendChild(nft);
+    const label = document.createElement('div'); label.className = 'label';
+    label.innerHTML = `<b>${c.name} ${c.token}</b><span>${c.bgName} ${c.bg}</span>`;
+    box.appendChild(label); wrap.appendChild(box);
+    const t = { nft, cat, k: 1, off: c.off };
+    nft.addEventListener('pointerdown', onMove);
+    return t;
+  });
+
+  // Placement measured from the collection engine: 800x800 frame, cat spans
+  // x 224-620 and y 360-788, so ~53.5% tall with paws ~1.5% above the bottom.
+  function layout(t) {
+    const S = t.nft.clientWidth, k = 0.535 * S / 180;
+    t.k = k;
+    t.left = 0.5275 * S - 104 * k;
+    t.top = 0.985 * S - 194 * k;
+    t.cat.style.transform = `translate(${t.left}px,${t.top}px) scale(${k})`;
+  }
+  const relayout = () => tiles.forEach(layout);
+  addEventListener('resize', relayout); relayout();
+
+  let pointer = null, lastMove = 0;
+  function onMove(e) { pointer = { x: e.clientX, y: e.clientY }; lastMove = performance.now(); }
+  addEventListener('pointermove', onMove);
+  document.addEventListener('pointerleave', () => { pointer = null; });
+
+  function frame(now) {
+    for (const t of tiles) {
+      let row = 0, col;
+      if (pointer && now - lastMove < 4000) {
+        const r = t.nft.getBoundingClientRect();
+        const hx = r.left + t.left + 104 * t.k, hy = r.top + t.top + 80 * t.k;
+        const dx = pointer.x - hx, dy = pointer.y - hy;
+        if (Math.hypot(dx, dy) < 30 * t.k) { col = 6; }
+        else {
+          const d = Math.round(((Math.atan2(dx, -dy) + Math.PI * 2) % (Math.PI * 2)) / (Math.PI / 8)) % 16;
+          row = d < 8 ? 9 : 10; col = d % 8;
+        }
+      } else {
+        col = Math.floor(now / 220) % 6;
+      }
+      t.cat.style.backgroundPosition = `${-col * CW}px ${-row * CH}px`;
+      // Per-frame paw anchor so every cat stays planted while it turns its head
+      const o = t.off[row + ',' + col] || [0, 0];
+      t.cat.style.transform = `translate(${t.left + o[0] * t.k}px,${t.top + o[1] * t.k}px) scale(${t.k})`;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

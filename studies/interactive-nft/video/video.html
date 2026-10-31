@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Pix;src:url(PixelifySans-Medium.ttf)}
+html,body{margin:0;background:#0c0d0f;overflow:hidden}
+#v{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 55%,#1a1626 0,#0c0d0f 70%)}
+#cam{position:absolute;inset:0;transform-origin:50% 60%}
+.tile{position:absolute;overflow:hidden}
+.cat{position:absolute;left:0;top:0;width:192px;height:208px;background-repeat:no-repeat;background-size:1536px 2288px;image-rendering:pixelated;transform-origin:0 0}
+.txt{position:absolute;text-align:center;font-family:Pix;color:#fff;line-height:1.02;
+  -webkit-text-stroke:var(--sw) #000;paint-order:stroke fill;text-shadow:var(--sh) var(--sh) 0 #000;white-space:pre;transform-origin:50% 50%}
+.txt .y{color:#ffe14a}.txt .c{color:#38f0ff}.txt .p{color:#ff4fd8}
+#logo{position:absolute;image-rendering:pixelated;filter:drop-shadow(1px 1px 0 #000)}
+#cursor{position:absolute;width:0;height:0}
+#cursor svg{position:absolute;left:-2px;top:-2px}
+#finger{position:absolute;border-radius:50%;background:#ffffff30;border:6px solid #fff;box-shadow:0 0 0 4px #000,0 0 24px #38f0ff}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+#black{position:absolute;inset:0;background:#000;opacity:0}
+.fname{position:absolute;font-family:Pix;color:#8b8796;font-size:var(--fz);left:var(--fx);top:var(--fy);width:var(--fw);text-align:center}
+#bigLogo{position:absolute;image-rendering:pixelated;display:none}
+</style>
+</head>
+<body>
+<div id="v">
+  <div id="cam"><div id="tiles"></div><img id="bigLogo" src="logo.png"></div>
+  <div id="txtA" class="txt"></div>
+  <img id="logo" src="logo.png">
+  <div id="finger"></div>
+  <div id="cursor"><svg viewBox="0 0 12 19" shape-rendering="crispEdges"><path fill="#000" d="M0 0h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1H7v1h1v2h1v2H7v1H6v-2H5v-2H4v1H3v1H2v1H1v1H0z"/><path fill="#fff" d="M1 2h1v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1H6v1h1v2h1v2H7v-2H6v-2H5v-1H4v1H3v1H2v1H1z"/></svg></div>
+  <div id="fname" class="fname">pfp_final_FINAL(2).jpg</div>
+  <div id="black"></div>
+  <div id="flash"></div>
+</div>
+<script src="pets.js"></script>
+<script>
+const CATS=PETS;['#000101','#566744','#2D67AD','#B3FBE5'].forEach((b,i)=>CATS[i].bg=b);
+const BGS=['#2D67AD','#026340','#D0B564','#B3FBE5','#B3FA03','#2F4872','#000101','#566744','#A85044','#01BC1D'];
+const DARKBG=['#000101','#2F4872','#026340'];
+const P=new URLSearchParams(location.search);
+const H=P.get('f')==='h';const W=H?1920:1080,HH=H?1080:1920;
+const v=document.getElementById('v');v.style.width=W+'px';v.style.height=HH+'px';
+const $=id=>document.getElementById(id);
+const ease=x=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3);
+const lerp=(a,b,x)=>a+(b-a)*x;
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+
+// Wall of tiles on collection backgrounds; no dark cat on a dark background (engine contrast rule)
+const WALL=(()=>{const S=H?220:230,g=10,cols=H?8:4,rows=H?3:5;
+  const tw=cols*S+(cols-1)*g,x0=(W-tw)/2,y0=H?330:560;const out=[];
+  const order=CATS.map((_,i)=>i).sort((a,b)=>((a*7919)%23)-((b*7919)%23));let n=0;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const ci=order[(n++)%order.length];let bg;
+    do{bg=BGS[Math.floor(rnd()*BGS.length)]}while(CATS[ci].dark&&DARKBG.includes(bg));
+    out.push({x:x0+c*(S+g),y:y0+r*(S+g),S,ci,bg})}return out})();
+const pool=[];const tilesEl=$('tiles');
+for(let i=0;i<WALL.length;i++){const el=document.createElement('div');el.className='tile';const cat=document.createElement('div');cat.className='cat';el.appendChild(cat);tilesEl.appendChild(el);pool.push({el,cat})}
+
+function single(){return [{...(H?{x:1000,y:150,S:780}:{x:80,y:820,S:920}),ci:0,bg:CATS[0].bg}]}
+function grid(){if(H){const S=420,g=20,x0=(1920-4*S-3*g)/2;return [0,1,2,3].map(i=>({x:x0+i*(S+g),y:590,S,ci:i,bg:CATS[i].bg}))}
+  const S=470,g=20,x0=(1080-2*S-g)/2;return [0,1,2,3].map(i=>({x:x0+(i%2)*(S+g),y:780+Math.floor(i/2)*(S+g),S,ci:i,bg:CATS[i].bg}))}
+function endRow(){if(H){const S=300,g=24,x0=(1920-4*S-3*g)/2;return [0,1,2,3].map(i=>({x:x0+i*(S+g),y:680,S,ci:i,bg:CATS[i].bg}))}
+  const S=390,g=20,x0=(1080-2*S-g)/2;return [0,1,2,3].map(i=>({x:x0+(i%2)*(S+g),y:1060+Math.floor(i/2)*(S+g),S,ci:i,bg:CATS[i].bg}))}
+const head=L=>{const k=0.535*L.S/180;return {x:L.x+0.5275*L.S,y:L.y+0.985*L.S-(194-80)*k,k}};
+
+const SC=[[0,0.3,'cover'],[0.3,3.6,'static'],[3.6,3.9,'black'],[3.9,7.0,'single'],[7.0,9.6,'grid'],[9.6,12.0,'phone'],[12.0,12.3,'black'],[12.3,16.3,'wall'],[16.3,20,'end']];
+const sceneAt=t=>SC.find(s=>t>=s[0]&&t<s[1])||SC[SC.length-1];
+const BEATS=[
+ [0,0.3,'STATIC PFPs\nARE <span class="y">OVER.</span>','top'],
+ [0.4,1.5,'THIS IS\nA PFP.','a'],
+ [1.5,2.6,'IT DOES...\n<span class="p">NOTHING.</span>','a'],
+ [2.6,3.6,'SO\n<span class="y">2021.</span>','a'],
+ [3.95,7.0,'NOW IT\nSEES <span class="y">YOU.</span>','a'],
+ [7.1,9.6,'MOVE.\nTHEY <span class="c">FOLLOW.</span>','top'],
+ [9.7,12.0,'ON YOUR\n<span class="p">PHONE</span> TOO.','top'],
+ [12.3,13.7,'STATIC PFPs?','top'],
+ [13.7,16.3,'<span class="y">THAT\'S CUTE.</span>','top'],
+ [16.5,20,'EVERY WEIRD CAT\nIS <span class="y">INTERACTIVE.</span>','end'],
+];
+const SLAMS=BEATS.slice(1).map(b=>b[0]);
+
+function cursorAt(t){
+  const sc=sceneAt(t)[2];
+  if(sc==='static'){const L=single()[0],h=head(L);const u=t-0.3;const e=ease(u/0.4);
+    const px=h.x+Math.sin(u*3.2)*L.S*0.35,py=h.y+Math.cos(u*2.1)*L.S*0.2;return {x:lerp(H?200:120,px,e),y:lerp(H?900:1750,py,e),clicks:[1.2,1.45,2.1,2.3,2.5]}}
+  if(sc==='single'){const L=single()[0],h=head(L),r=L.S*0.45;const e=ease((t-3.95)/0.4);const a=(t-4.0)*3.4;
+    const tx=h.x+Math.cos(a)*r,ty=h.y+Math.sin(a)*r*0.9;return {x:lerp(H?200:120,tx,e),y:lerp(H?900:1750,ty,e)}}
+  if(sc==='grid'){const u=t-7.0;
+    const pts=H?[[150,420],[1800,420],[1800,1040],[150,1040]]:[[90,720],[1000,720],[1000,1790],[90,1790]];
+    const seg=0.6,k=Math.floor(u/seg),f=ease((u%seg)/0.25);const a=pts[k%4],b=pts[(k+1)%4];return {x:lerp(a[0],b[0],f),y:lerp(a[1],b[1],f)}}
+  if(sc==='phone'){const u=t-9.6;const cx=H?960:540,cy=H?800:1255;return {x:cx+Math.cos(u*3.0)*(H?780:440),y:cy+Math.sin(u*2.2)*(H?250:480),touch:true}}
+  if(sc==='wall'){const u=t-12.3;const cx=W/2,cy=H?700:1270;return {x:cx+Math.sin(u*2.2)*(H?900:520),y:cy+Math.cos(u*1.5)*(H?300:600)}}
+  return {x:W/2,y:HH/2}
+}
+
+function placeText(el,b,t){
+  if(!b){el.style.display='none';return}
+  el.style.display='block';el.innerHTML=b[2];
+  let size,y,x=0,w=W;
+  if(b[3]==='a'&&H){size=150;y=160;x=60;w=900}
+  else if(b[3]==='a'){size=150;y=300}
+  else if(b[3]==='end'){size=H?96:100;y=H?420:800}
+  else {size=H?140:150;y=H?110:250}
+  el.style.left=x+'px';el.style.top=y+'px';el.style.fontSize=size+'px';
+  el.style.setProperty('--sw',Math.round(size*0.11)+'px');el.style.setProperty('--sh',Math.round(size*0.06)+'px');
+  el.style.transform='none';el.style.width='max-content';let fs=size;
+  while(el.offsetWidth>w-80&&fs>40){fs-=4;el.style.fontSize=fs+'px';el.style.setProperty('--sw',Math.round(fs*0.11)+'px')}
+  el.style.width=w+'px';
+  const d=t-b[0];let s=1,sx=0,sy=0,o=1;
+  if(t>=0.3){s=d<0.1?lerp(2.6,1,ease(d/0.1)):1;o=Math.min(1,d/0.05);
+    if(d>0.1&&d<0.32){const a=(0.32-d)/0.22*18;sx=Math.sin(d*170)*a;sy=Math.cos(d*130)*a*0.6}}
+  if(t>b[1]-0.08&&b[3]!=='end'&&t>=0.3)o=Math.max(0,(b[1]-t)/0.08);
+  el.style.opacity=o;el.style.transform=`translate(${sx}px,${sy}px) scale(${s})`;
+}
+
+function render(t){
+  const [s0,,sc]=sceneAt(t);
+  const layout=(sc==='single'||sc==='static')?single():(sc==='grid'||sc==='phone'||sc==='cover')?grid():sc==='wall'?WALL:sc==='end'?endRow():[];
+  const cur=cursorAt(t);
+  pool.forEach((T,i)=>{const L=layout[i];if(!L){T.el.style.display='none';return}
+    T.el.style.display='block';T.el.style.left=L.x+'px';T.el.style.top=L.y+'px';T.el.style.width=T.el.style.height=L.S+'px';
+    T.el.style.background=L.bg;T.cat.style.backgroundImage=`url(p_${CATS[L.ci].n}.webp)`;
+    const k=0.535*L.S/180;T.cat.style.transform=`translate(${0.5275*L.S-104*k}px,${0.985*L.S-194*k}px) scale(${k})`;
+    let row=0,col=6;
+    if(sc!=='cover'&&sc!=='end'&&sc!=='static'&&t>0.4){const h=head(L);
+      let c=cur;if(sc==='wall'){const lag=Math.hypot(h.x-cur.x,h.y-cur.y)*0.00012;c=cursorAt(Math.max(12.31,t-lag))}
+      const dx=c.x-h.x,dy=c.y-h.y;
+      if(Math.hypot(dx,dy)>30*k){const d=Math.round(((Math.atan2(dx,-dy)+Math.PI*2)%(Math.PI*2))/(Math.PI/8))%16;row=d<8?9:10;col=d%8}}
+    if(sc==='end'&&t>18.2){col=Math.floor((t-18.2)/0.22)%6}
+    T.cat.style.backgroundPosition=`${-col*192}px ${-row*208}px`;
+    const o=(CATS[L.ci].off||{})[row+','+col]||[0,0];
+    T.cat.style.transform=`translate(${0.5275*L.S-104*k+o[0]*k}px,${0.985*L.S-194*k+o[1]*k}px) scale(${k})`;
+    T.el.style.filter=sc==='static'?'grayscale(.85) contrast(.8) brightness(.8) blur(1.5px)':'none';
+    const delay=sc==='wall'?((i*37)%WALL.length)*0.012:i*0.05;
+    const pop=(t<0.3||sc==='static'&&t>0.6)?1:ease((t-s0-delay)/0.16);
+    T.el.style.transform=`scale(${lerp(0.4,1,pop)})`;T.el.style.opacity=pop;
+  });
+  const act=BEATS.filter(b=>t>=b[0]&&t<b[1]);placeText($('txtA'),act[0],t);
+  const sl=SLAMS.map(s=>t-s).filter(d=>d>=0&&d<0.35)[0];
+  let cs=1,cx=0,cy=0;
+  if(sl!==undefined){cs=1+0.06*(1-ease(sl/0.35));const a=(1-sl/0.35)*16;cx=Math.sin(sl*190)*a;cy=Math.cos(sl*150)*a}
+  if(sc==='wall'){cs*=lerp(1.35,1,ease((t-12.3)/1.2))}
+  if(sc==='single'){cs*=lerp(1,1.08,(t-3.9)/3.1)}
+  $('cam').style.transform=`translate(${cx}px,${cy}px) scale(${cs})`;
+  $('cam').style.filter=sl!==undefined&&sl<0.12?'drop-shadow(10px 0 0 #ff003c) drop-shadow(-10px 0 0 #00e5ff)':'none';
+  $('flash').style.opacity=sl!==undefined&&sl<0.07?0.35*(1-sl/0.07):0;
+  $('logo').style.width=(H?300:280)+'px';$('logo').style.left=(H?44:48)+'px';$('logo').style.top=(H?40:56)+'px';
+  $('logo').style.display=sc==='end'?'none':'block';
+  const bl=$('bigLogo');bl.style.display=sc==='end'?'block':'none';
+  if(sc==='end'){const bw=H?1000:900;bl.style.width=bw+'px';bl.style.left=(W-bw)/2+'px';bl.style.top=(H?170:500)+'px';
+    const e=ease((t-16.3)/0.18);bl.style.transform=`scale(${lerp(2,1,e)})`;bl.style.opacity=e}
+  const cu=$('cursor'),fg=$('finger');const cz=H?4:5;
+  cu.firstElementChild.setAttribute('width',12*cz);cu.firstElementChild.setAttribute('height',19*cz);
+  cu.style.display=(sc==='static'||sc==='single'||sc==='grid'||sc==='wall')&&t>0.4?'block':'none';
+  const ck=(cur.clicks||[]).some(c=>t>=c&&t<c+0.08);cu.firstElementChild.style.transform=ck?'scale(.8)':'none';cu.style.left=cur.x+'px';cu.style.top=cur.y+'px';
+  const fr=H?34:42;fg.style.display=sc==='phone'?'block':'none';fg.style.width=fg.style.height=2*fr+'px';fg.style.left=(cur.x-fr-6)+'px';fg.style.top=(cur.y-fr-6)+'px';
+  $('black').style.opacity=sc==='black'?1:t>19.3?Math.min(1,(t-19.3)/0.6):0;
+  $('fname').style.display=sc==='static'?'block':'none';
+}
+const fn=$('fname');fn.style.setProperty('--fz',(H?40:48)+'px');fn.style.setProperty('--fx',(H?1000:80)+'px');fn.style.setProperty('--fy',(H?945:1755)+'px');fn.style.setProperty('--fw',(H?780:920)+'px');
+window.render=render;
+</script>
+</body>
+</html>
