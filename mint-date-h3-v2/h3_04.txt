@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a side-on medium-wide night shot frames the glowing cyan stone path shown in <Picture 1>, preserving the low houses with amber windows behind it and the cold glow at the far right. The camera trucks right with large amplitude at fast, constant speed, so the path stones streak from right to left under the frame and the houses slide left more slowly as background parallax. Blurred amber lantern posts whip across the foreground from right to left every half second. Each stone flashes brighter cyan for an instant as it passes the center of frame. Pixel dust trails low over the path. The middle band of the frame above the path stays empty the whole time. No characters appear and no text appears anywhere.
+
+overall_soundscape: Wind rushes past at speed and lantern posts whoosh by in a steady rhythm.
+
+non_diegetic_music: Full synthwave drums, driving bass and a bright chiptune lead at 120 beats per minute, at full volume from the first frame.

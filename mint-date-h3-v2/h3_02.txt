@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a high night shot starts above the tiled rooftops shown in <Picture 1>, preserving the amber lantern, the plaza fountain with rainbow water, the stone path and the colossal cyan door in the far right background. The camera cranes down with large amplitude at medium speed, dropping past the roof edge and the lantern, which slide up and out of frame as foreground parallax, and settles at ground level on the empty stone area at the start of the path, then holds still. The rainbow water keeps falling in steady pixel streams. The lantern flame flickers. A cold cyan glow from the distant door spreads along the right edge of every stone. The stone area in the lower center stays empty. No characters appear and no text appears anywhere.
+
+overall_soundscape: Fountain water falls steadily while a soft night wind passes over the roof tiles.
+
+non_diegetic_music: The low synthesizer pad continues in a slow half-time feel, with a second deep drum hit on the first frame.

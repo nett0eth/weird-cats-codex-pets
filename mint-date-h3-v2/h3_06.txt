@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a low medium night shot frames the narrow alley shown in <Picture 1>, preserving the row of empty open cardboard boxes with folded blankets, the empty bowls, the blank sign and the warm hanging bulb. The camera dollies right with large amplitude at fast speed, low to the ground, so the boxes slide past from right to left. A gust of wind runs through the alley from left to right: the hanging bulb swings hard on its wire, its warm light sweeping across the boxes, blanket corners lift and flap, and one empty box tips over. Dust and a few paper scraps blow toward the cyan gap at the right end of the alley. The stone floor in the foreground stays empty. No characters appear and no text appears anywhere.
+
+overall_soundscape: A gust of wind whips through the alley, the bulb creaks on its wire and a cardboard box tumbles.
+
+non_diegetic_music: Full synthwave drums and bass at 120 beats per minute, with a snare hit on the first frame.

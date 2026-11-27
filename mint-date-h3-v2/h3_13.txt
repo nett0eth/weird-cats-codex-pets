@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a very high aerial night shot looks over the whole dark pixel city shown in <Picture 1>, preserving the colossal door standing slightly open on the horizon with three wide beams of red, green and blue light fanning into the sky. The camera cranes up and pulls out with large amplitude at medium speed, revealing more of the city. A broad wave of light rolls outward from the door across the rooftops toward the camera, its leading edge split into red, green and blue bands. As the wave passes each block, every dark window switches on and the roofs keep a soft colored glow. The wave crosses the whole city and reaches the nearest rooftops at the bottom of frame in the last second. The beams in the sky slowly widen. No characters appear and no text appears anywhere.
+
+overall_soundscape: A deep rolling shockwave of air spreads over the city, with thousands of small lights clicking on behind it.
+
+non_diegetic_music: A full synthwave chorus at 120 beats per minute with synthetic choir, low brass and chiptune bells, at full volume.

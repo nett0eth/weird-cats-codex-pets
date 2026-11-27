@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a frontal low-angle night shot frames the colossal closed door shown in <Picture 1>, preserving its stone arch with carved cat ears, the wide empty stairway and the dead lanterns at the edges. On the first frame the thin vertical line of white light at the center widens as the two door halves part by a narrow gap. A blade of light pours out and splits into three separate bands, red, green and blue, that sweep down the steps toward the camera and fan out as three wide beams into the sky. The camera pulls out with large amplitude at fast speed for two seconds, then eases to a full stop and holds a static shot. The lanterns reignite one after another. Pixel dust and light particles drift upward in the beams. The gap stays narrow. The center landing of the stairway stays empty. No characters appear and no text appears anywhere.
+
+overall_soundscape: A deep wooden and iron groan as the door parts, a rush of air, then a low resonant boom that rolls away.
+
+non_diegetic_music: Full synthwave drums, bass, low brass and a triumphant chiptune lead return at 120 beats per minute on the first frame and sustain.

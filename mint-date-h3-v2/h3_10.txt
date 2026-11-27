@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a high-angle night shot from the top of the colossal stone stairway shown in <Picture 1> looks down the steps to the small amber city far below, preserving the lantern posts on both sides and the spiral of dark storm clouds above. The camera pulls out with medium amplitude at medium speed with a rough handheld shake, backing up the stairs. Strong wind blows from right to left: streaks of pixel dust and leaves fly across the frame, and the lantern flames bend hard, then go out one by one from the bottom of the stairs to the top. The clouds rotate slowly. Two lightning flashes with red, green and blue fringes light the whole stairway white for an instant. The center of the steps stays empty. No characters appear and no text appears anywhere.
+
+overall_soundscape: A howling wind, two close cracks of thunder, and lantern flames snuffing out with small puffs.
+
+non_diegetic_music: Low brass swells and pounding drums at 120 beats per minute build under a rising chiptune lead.

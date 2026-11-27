@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a close night interior shot looks into the arcade shown in <Picture 1> from its doorway, preserving the two rows of cabinets, the checkered floor, the coin tray on the counter and the dark neon tubes on the ceiling. The camera pushes in with medium amplitude at fast speed with a slight handheld sway, passing the counter, which slides out of the bottom of frame. The dark cabinet screens switch on one after another from front to back, each glowing a plain color, magenta, cyan, green, with no pictures or letters. Coins jump and rattle in the tray. In the last two seconds the ceiling neon tubes ignite and every screen shines at full brightness, washing the floor in red, green and blue light. The center of the floor stays empty. No characters appear and no text appears anywhere.
+
+overall_soundscape: Arcade cabinets power on with rising electronic chirps, coins rattle in a metal tray and neon tubes buzz alive.
+
+non_diegetic_music: Full synthwave drums and bass at 120 beats per minute with a chiptune arpeggio, a kick drum on the first frame.

@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a wide night shot frames the empty open-air stage shown in <Picture 1>, preserving the wooden floor, the iron truss with six dark spotlights, the faded red curtain, the blank banner and the old confetti on the ground. The camera arcs right with large amplitude at fast speed around the front of the stage, so the speaker stacks in the foreground sweep left across the lens. One second in, two spotlights snap on and cross their white beams over the empty floor, and old confetti lifts off the boards in a swirl. In the last two seconds all six spotlights are on, sweeping in red, green and blue, and fresh confetti falls from above. The curtain ripples in the wind. The stage floor stays empty. No characters appear and no text appears anywhere.
+
+overall_soundscape: Spotlights clunk on with heavy switches, confetti rustles in the wind and a faint crowd cheer echoes for a moment.
+
+non_diegetic_music: Full synthwave drums and bass at 120 beats per minute with a chiptune lead, a snare hit on the first frame.

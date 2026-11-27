@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a frontal night shot looks down the dark corridor shown in <Picture 1>, preserving the walls of stacked old tube monitors, the hanging cables and the metal floor. The camera pulls out with large amplitude at fast speed, travelling backward along the corridor so the monitors on both walls stream past the edges of frame toward the vanishing point. The monitors switch on in a wave that starts at the far end and chases the camera forward, each screen flashing white and settling to a plain green-cyan glow with a single blinking square cursor and no letters. Loose cables sway. Small sparks drop from the ceiling. The center of the metal floor stays empty. No characters appear and no text appears anywhere.
+
+overall_soundscape: Tube monitors click and whine on in a fast wave, with rapid mechanical keyboard clatter and falling sparks.
+
+non_diegetic_music: Full synthwave drums and bass at 120 beats per minute, with a double kick drum on the first frame.

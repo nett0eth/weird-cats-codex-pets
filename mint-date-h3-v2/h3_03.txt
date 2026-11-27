@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a ground-level night shot looks along the stone path shown in <Picture 1> toward the distant colossal door, preserving the amber lantern posts on both sides. The camera pushes in with large amplitude at fast speed, skimming just above the stones and accelerating. The path stones light up in cyan one after another in a chain that races ahead of the camera toward the door, each stone flashing white for an instant as it switches on. Lantern posts sweep past both edges of frame as fast foreground parallax. Small pixel dust lifts from each stone as it lights. The door grows larger and its seam light swells until cyan-white light fills most of the frame at the end. No characters appear and no text appears anywhere.
+
+overall_soundscape: A rapid chain of short electric clicks runs away into the distance, with rushing air close to the ground.
+
+non_diegetic_music: A rising noise sweep over a bass pulse at 120 beats per minute, with a drum fill in the last half second.

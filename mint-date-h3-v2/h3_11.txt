@@ -1,0 +1,7 @@
+For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+
+integrated_multimodal_description: [Shot 1] 2D-animated pixel art with crisp square pixels, a wide low-angle night shot frames the base of the colossal dark wood and iron door shown in <Picture 1>, preserving its stone arch, the dead lanterns and the thin cyan line of light in its center seam. The camera holds a static shot for one second while pixel dust settles slowly on the top step. Then the camera tilts up with large amplitude at slow speed along the door until a long black split-flap board mounted above the arch fills the upper center of frame, and holds a static shot. All the blank flap cells on the board start flipping rapidly, the black flaps rotating downward in a blur with no letters or numbers ever visible on them, then stop one at a time from left to right, resting completely blank and black. No characters appear and no text appears anywhere.
+
+overall_soundscape: Near silence with a faint wind and one clock tick, then dry rapid clattering of mechanical flaps, each stopping with a hard clack.
+
+non_diegetic_music: N/A
