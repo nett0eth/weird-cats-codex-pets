@@ -2,7 +2,7 @@
 import sys, os, functools
 sys.argv=[sys.argv[0],sys.argv[1]]
 exec(open('make_results.py').read().split('LANES=')[0])  # reuse helpers/fonts/bg/logo
-GTD=['logospaco','Iknowstuff07','Nobu_2k','zackanzen','ColdRye','childofrose_','rbagjamahesa','Cryptoismic','moonwalker408','stevevaisfan','RealAlienGuy','P1erre_deFermat','mikenftguy','istvanphoto','boyluuke','fauzxt','MatDav000','javapee006','lepcha_sui','Lexy841949','TkvitenT','RBraun71408','peterfamer66','potocoforeva','5597mq','FebriSense','jambujambu99p2','Vhanzj002','AnasseDazia','ChuckTardio','amir007_eth','IdealistRussian','aneeda01','dontfadeplease','annabellex_web3','MeloriKt','jiiiiiiii_i','brainystick','0xcryptow','Temi_eo','luyuban69','agunverse','SoangSoon','Ayaosans','yurnerou']
+GTD=['logospaco','Iknowstuff07','Nobu_2k','zackanzen','ColdRye','childofrose_','rbagjamahesa','Cryptoismic','moonwalker408','stevevaisfan','RealAlienGuy','P1erre_deFermat','mikenftguy','istvanphoto','boyluuke','fauzxt','MatDav000','javapee006','lepcha_sui','Lexy841949','TkvitenT','RBraun71408','peterfamer66','potocoforeva','5597mq','FebriSense','jambujambu99p2','Vhanzj002','AnasseDazia','ChuckTardio','amir007_eth','IdealistRussian','aneeda01','dontfadeplease','annabellex_web3','MeloriKt','jiiiiiiii_i','brainystick','0xcryptow','Temi_eo','luyuban69','agunverse','SoangSoon','Ayaosans','yurnerou','mowiek50750','LesmanaHai9803']
 FCFS=['XaeroDeath','ZachGibbons23','Suprprid3','Tucox_','TEENSONACID']
 D=64; ROW=96; COLX=[W*0.19,W*0.5,W*0.81]
 def block(names,col):

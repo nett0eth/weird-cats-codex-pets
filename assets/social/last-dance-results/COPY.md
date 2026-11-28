@@ -23,8 +23,10 @@ Reply 1, winners tagged (195)
 Congrats to the free mint winners:
 @hajime_umemiva @axcelz07 @KPbeden @Dmr98384402 @AndriOkey007 @Ianfield77 @NFdoctor03 @chicken_6fr @Big_Prim3 @CaaSi_5 @coremsn9099 @CryptoSpineX @kelleymiller4
 
-Reply 2 (91)
+Reply 2
 Check your stamp: weirdcats.xyz/weirdlist
+
+Made something and don't see your name? Reply with your link.
 
 No ticket yet? It's open until Dec 1, 00:00 UTC.
 
