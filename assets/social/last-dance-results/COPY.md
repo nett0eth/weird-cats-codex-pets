@@ -19,11 +19,14 @@ We watched every meme, GIF and video. Some of them twice. One of them we're stil
 
 13 free mints below. Everyone else who entered: check your Weirdlist ticket, there's a stamp on it.
 
-Reply 1, winners tagged (187)
+Reply 1, winners tagged (195)
 Congrats to the free mint winners:
-@hajime_umemiva @axcelz07 @KPbeden @Dmr98384402 @AndriOkey007 @Ianfield77 @NFdoctor03 @chicken_6fr @Big_Prim3 @CaaSi_5 @coremsn9099 @CryptoSpineX @WH2U5
+@hajime_umemiva @axcelz07 @KPbeden @Dmr98384402 @AndriOkey007 @Ianfield77 @NFdoctor03 @chicken_6fr @Big_Prim3 @CaaSi_5 @coremsn9099 @CryptoSpineX @kelleymiller4
 
 Reply 2 (91)
 Check your stamp: weirdcats.xyz/weirdlist
 
 No ticket yet? It's open until Dec 1, 00:00 UTC.
+
+Reply 3 (optional, with GTD + FCFS list GIF)
+Every other dancer got a stamp too. GTD and FCFS, all on your ticket.

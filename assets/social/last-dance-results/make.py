@@ -91,9 +91,9 @@ for k in range(N):
     elif t<13.2:
         a=11.0
         slam(fr,textimg('WEIRDEST|OF ALL',40,PK),W/2,150,t-a)
-        pop(fr,pfp('WH2U5',210,PK),W/2,395,t-a-0.4)
+        pop(fr,pfp('kelleymiller4',210,PK),W/2,395,t-a-0.4)
         if t-a>0.55:
-            ti=textimg('@WH2U5',28,WH,'g'); fr.alpha_composite(ti,(int(W/2-ti.width/2),532))
+            ti=textimg('@kelleymiller4',28,WH,'g'); fr.alpha_composite(ti,(int(W/2-ti.width/2),532))
         slam(fr,textimg('+1 FREE MINT',16,Y),W/2,610,t-a-0.8,seed=9)
     else:
         a=13.2
